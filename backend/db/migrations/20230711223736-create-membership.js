@@ -16,7 +16,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.ENUM
+        type: DataTypes.ENUM,
+	      values: ['Online', 'In person']
       },
       createdAt: {
         allowNull: false,
