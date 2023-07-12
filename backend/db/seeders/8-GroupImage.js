@@ -18,17 +18,17 @@ module.exports = {
     */
     await GroupImage.bulkCreate([
       {
-        eventId: 1,
+        groupId: 1,
         url: '/coolboys',
         preview: false
       },
       {
-        eventId: 2,
+        groupId: 2,
         url: '/lameboys',
         preview: false
       },
       {
-        eventId: 1,
+        groupId: 1,
         url: '/shenaniganboys',
         preview: true
       },
