@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       type: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
 	      values: ['Online', 'In person']
       },
       private: {
