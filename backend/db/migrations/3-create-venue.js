@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('GroupImages', {
+    await queryInterface.createTable('Venues', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,13 +20,23 @@ module.exports = {
         references: {
           model: 'Groups',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
-      url: {
+      address: {
         type: Sequelize.STRING
       },
-      preview: {
-        type: Sequelize.BOOLEAN
+      city: {
+        type: Sequelize.STRING
+      },
+      state: {
+        type: Sequelize.STRING
+      },
+      lat: {
+        type: Sequelize.DECIMAL
+      },
+      lng: {
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
@@ -39,7 +49,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "GroupImages";
+    options.tableName = "Venues";
     await queryInterface.dropTable(options);
   }
 };
