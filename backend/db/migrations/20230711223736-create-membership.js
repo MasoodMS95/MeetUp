@@ -10,13 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        }
       },
       status: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
 	      values: ['Online', 'In person']
       },
       createdAt: {

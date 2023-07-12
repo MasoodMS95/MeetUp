@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Attendance extends Model {
     /**
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      
     }
   }
   Attendance.init({
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
-      values: ['Pending', 'Waitlist', 'Attending']
+      values: ['pending', 'waitlist', 'attending']
     },
   }, {
     sequelize,
