@@ -20,7 +20,8 @@ module.exports = {
         references: {
           model: 'Groups',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       url: {
         type: Sequelize.STRING
