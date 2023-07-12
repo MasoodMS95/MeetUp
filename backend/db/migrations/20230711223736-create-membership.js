@@ -24,7 +24,7 @@ module.exports = {
         }
       },
       status: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
 	      values: ['Online', 'In person']
       },
       createdAt: {
