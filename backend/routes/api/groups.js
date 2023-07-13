@@ -28,9 +28,29 @@ const validateGroup = [
     .withMessage('City is required'),
   check('state')
     .exists({ checkFalsy: true })
-    .withMessage('City is required'),
+    .withMessage('State is required'),
   handleValidationErrors
 ];
+
+const validateVenue = [
+  check('address')
+    .exists({ checkFalsy: true })
+    .withMessage('Street address is required'),
+  check('city')
+    .exists({ checkFalsy: true })
+    .withMessage('City is required'),
+  check('state')
+    .exists({ checkFalsy: true })
+    .withMessage('State is required'),
+  check('lat')
+    .isDecimal()
+    .withMessage('Latitude is not valid'),
+  check('lng')
+    .isDecimal()
+    .withMessage('Longitude is not valid'),
+  handleValidationErrors
+]
+
 
 //Get all groups
 router.get('/', async (req, res) => {
@@ -64,6 +84,7 @@ router.get('/', async (req, res) => {
   formattedResponse.Groups = groupList;
   res.json(formattedResponse);
 })
+
 
 //Get groups by current user
 router.get('/current', requireAuth, async (req, res) => {
@@ -101,6 +122,7 @@ router.get('/current', requireAuth, async (req, res) => {
   formattedResponse.Groups = groupList;
   res.json(formattedResponse);
 })
+
 
 //Get user by groupID
 router.get('/:groupId', requireAuth, async (req, res) => {
@@ -140,11 +162,11 @@ router.get('/:groupId', requireAuth, async (req, res) => {
   res.json(parsed);
 });
 
+
 //create a group
 router.post('/', requireAuth, validateGroup, async (req, res) => {
-  const {name, about, type, private, city, state} = req.body;
   const organizerId = req.user.id;
-  const group = await Group.create({organizerId, name, about, type, private, city, state})
+  const group = await Group.create({organizerId, ...req.body})
   res.statusCode = 201;
   res.json(group);
 });
@@ -158,13 +180,14 @@ router.post('/:groupId/images', requireAuth, async (req, res) => {
   });
   if(group.organizerId === req.user.id){
     const newEntry = await group.createGroupImage(req.body);
-    res.json(newEntry);
+    return res.json(newEntry);
   }
   res.statusCode = 404;
   res.json({
     "message": "Group couldn't be found"
   })
 });
+
 
 //Edit a group
 router.put('/:groupId', requireAuth, validateGroup, async (req, res) => {
@@ -173,16 +196,17 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res) => {
       id: req.params.groupId
     }
   });
-  if(group){
+  if(group && group.organizerId === req.user.id){
     group.set(req.body);
     await group.save();
-    res.json(group);
+    return res.json(group);
   }
   res.statusCode = 404;
   res.json({
     "message": "Group couldn't be found"
   });
 });
+
 
 //Delete a group
 router.delete('/:groupId', requireAuth, async (req, res) => {
@@ -197,6 +221,88 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
       "message": "Successfully deleted"
     })
   }
+  res.statusCode = 404;
+  res.json({
+    "message": "Group couldn't be found"
+  });
+})
+
+
+//Get all Venues for a Group Specified by its id.
+router.get('/:groupId/venues', requireAuth, async (req, res) => {
+  const groupData = await Group.findOne({
+    where: {
+      id: req.params.groupId
+    },
+    include: [
+      {
+        model: Membership
+      },
+      {
+        model: Venue,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        }
+      }
+    ]
+  });
+
+  if(groupData){
+    let parsed = groupData.toJSON();
+    let confirmed = false;
+    if(parsed.organizerId === req.user.id) confirmed = true;
+    parsed.Memberships.forEach(member => {
+      if(member.id === req.user.id && member.status === 'co-host'){
+        confirmed = true;
+      }
+    })
+
+    if(confirmed){
+      let response = {};
+      response.Venues = parsed.Venues;
+      return res.json(response);
+    }
+  }
+
+  res.statusCode = 404;
+  res.json({
+    "message": "Group couldn't be found"
+  });
+})
+
+
+//Create a new Venue
+router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => {
+  const groupData = await Group.findOne({
+    where: {
+      id: req.params.groupId
+    },
+    include: [
+      {
+        model: Membership
+      },
+    ]
+  });
+
+  if(groupData){
+    let parsed = groupData.toJSON();
+    let confirmed = false;
+    if(parsed.organizerId === req.user.id) confirmed = true;
+    parsed.Memberships.forEach(member => {
+      if(member.id === req.user.id && member.status === 'co-host'){
+        confirmed = true;
+      }
+    })
+
+    if(confirmed){
+      const newVenue = await groupData.createVenue(req.body);
+      const copy = newVenue.toJSON();
+      delete copy.updatedAt;
+      delete copy.createdAt
+      return res.json(copy);
+    }
+  }
+
   res.statusCode = 404;
   res.json({
     "message": "Group couldn't be found"
