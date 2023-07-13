@@ -20,15 +20,15 @@ module.exports = {
       {
         groupId: 1,
         url: '/coolboys',
-        preview: false
+        preview: true
       },
       {
         groupId: 2,
         url: '/lameboys',
-        preview: false
+        preview: true
       },
       {
-        groupId: 1,
+        groupId: 3,
         url: '/shenaniganboys',
         preview: true
       },
