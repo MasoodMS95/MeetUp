@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     groupId: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
-      values: ['Online', 'In person']
+      values: ['co-host', 'member', 'pending']
     },
   }, {
     sequelize,

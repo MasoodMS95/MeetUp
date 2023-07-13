@@ -33,7 +33,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-	      values: ['Online', 'In person']
+	      values: ['co-host', 'member', 'pending']
       },
       createdAt: {
         allowNull: false,
