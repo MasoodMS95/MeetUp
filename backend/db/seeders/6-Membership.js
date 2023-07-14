@@ -29,19 +29,29 @@ module.exports = {
         status: 'co-host'
       },
       {
-        userId: 1,
-        groupId: 3,
-        status: 'member'
-      },
-      {
         userId: 2,
         groupId: 2,
         status: 'member'
       },
       {
+        userId: 2,
+        groupId: 1,
+        status: 'pending'
+      },
+      {
         userId: 3,
         groupId: 3,
         status: 'pending'
+      },
+      {
+        userId: 3,
+        groupId: 2,
+        status: 'pending'
+      },
+      {
+        userId: 2,
+        groupId: 3,
+        status: 'member'
       },
       {
         userId: 4,
