@@ -24,6 +24,8 @@ const validateVenue = [
   handleValidationErrors
 ]
 
+
+//Edit a venue specified by its id
 router.put('/:venueId', requireAuth, validateVenue, async (req, res) => {
   const venue = await Venue.findOne({
     where:{
