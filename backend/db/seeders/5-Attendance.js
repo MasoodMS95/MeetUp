@@ -23,7 +23,7 @@ module.exports = {
       {
         eventId: 1,
         userId: 1,
-        status: 'pending'
+        status: 'attending'
       },
       {
         eventId: 2,
@@ -33,7 +33,7 @@ module.exports = {
       {
         eventId: 3,
         userId: 3,
-        status: 'attending'
+        status: 'pending'
       },
     ], { validate: true });
   },
