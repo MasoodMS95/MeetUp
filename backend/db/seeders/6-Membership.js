@@ -38,6 +38,11 @@ module.exports = {
         groupId: 1,
         status: 'member'
       },
+      {
+        userId: 4,
+        groupId: 3,
+        status: 'co-host'
+      },
     ], { validate: true });
   },
 
