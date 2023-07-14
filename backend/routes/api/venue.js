@@ -45,7 +45,7 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res) => {
       let parsed = group.toJSON();
       if(parsed.organizerId === req.user.id)confirmed = true;
       parsed.Memberships.forEach(member => {
-        if(member.id === req.user.id && member.status === 'co-host'){
+        if(member.userId === req.user.id && member.status === 'co-host'){
           confirmed = true;
         }
       });
