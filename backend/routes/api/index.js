@@ -6,6 +6,8 @@ const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const venueRouter = require('./venue.js')
 const eventsRouter = require('./events.js')
+const groupImageRouter = require('./group-images.js')
+const eventImageRouter = require('./event-image.js');
 
 router.use(restoreUser);
 
@@ -17,7 +19,11 @@ router.use('/groups', groupsRouter);
 
 router.use('/venues', venueRouter);
 
-router.use('/events', eventsRouter)
+router.use('/events', eventsRouter);
+
+router.use('/group-images', groupImageRouter);
+
+router.use('/event-images', eventImageRouter);
 
 router.get(
   '/restore-user',
