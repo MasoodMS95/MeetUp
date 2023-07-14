@@ -35,6 +35,16 @@ module.exports = {
         userId: 3,
         status: 'pending'
       },
+      {
+        eventId: 1,
+        userId: 4,
+        status: 'attending'
+      },
+      {
+        eventId: 4,
+        userId: 4,
+        status: 'attending'
+      },
     ], { validate: true });
   },
 
