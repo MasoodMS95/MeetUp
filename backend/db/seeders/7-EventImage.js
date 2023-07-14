@@ -23,7 +23,7 @@ module.exports = {
       {
         eventId: 1,
         url: '/bigChungus',
-        preview: false
+        preview: true
       },
       {
         eventId: 2,
