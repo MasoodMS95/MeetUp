@@ -5,6 +5,7 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const venueRouter = require('./venue.js')
+const eventsRouter = require('./events.js')
 
 router.use(restoreUser);
 
@@ -15,6 +16,8 @@ router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
 
 router.use('/venues', venueRouter);
+
+router.use('/events', eventsRouter)
 
 router.get(
   '/restore-user',

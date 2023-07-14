@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Group, GroupImage, Membership, Venue, User } = require('../../db/models');
+const { Group, GroupImage, Membership, Venue, User, EventImage, Attendance, Event } = require('../../db/models');
 
 const validateGroup = [
   check('name')
@@ -89,15 +89,15 @@ router.get('/', async (req, res) => {
 //Get groups by current user
 router.get('/current', requireAuth, async (req, res) => {
   const data = await Group.findAll({
-    where: {
-      organizerId: req.user.id
-    },
     include:[
     {
       model: GroupImage
     },
     {
-      model: Membership
+      model: Membership,
+      where: {
+        userId: req.user.id
+      },
     }
   ]});
 
@@ -252,7 +252,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res) => {
     let confirmed = false;
     if(parsed.organizerId === req.user.id) confirmed = true;
     parsed.Memberships.forEach(member => {
-      if(member.id === req.user.id && member.status === 'co-host'){
+      if(member.userId === req.user.id && member.status === 'co-host'){
         confirmed = true;
       }
     })
@@ -289,7 +289,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
     let confirmed = false;
     if(parsed.organizerId === req.user.id) confirmed = true;
     parsed.Memberships.forEach(member => {
-      if(member.id === req.user.id && member.status === 'co-host'){
+      if(member.userId === req.user.id && member.status === 'co-host'){
         confirmed = true;
       }
     })
@@ -307,6 +307,80 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
   res.json({
     "message": "Group couldn't be found"
   });
+})
+
+router.get('/:groupId/events', async (req, res) => {
+  const events = await Event.findAll({
+    where:{
+      groupId: req.params.groupId
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'capacity', 'price', 'description']
+    },
+    include:[
+    {
+      model: EventImage,
+      where: {
+        preview: true
+      },
+      limit: 1
+    },
+    {
+      model: Attendance
+    },
+    {
+      model: Venue,
+      attributes: ['id', 'city', 'state']
+    },
+  ]});
+
+  //Populate EventList
+  const eventList = [];
+  events.forEach(event => {
+    eventList.push(event.toJSON());
+  })
+
+  let group = await Group.findOne({
+    where: {
+      id: req.params.groupId
+    },
+    attributes: ['id', 'name', 'city', 'state']
+  })
+  if(!group){
+    res.statusCode = 404;
+    res.json({
+      "message": "Group couldn't be found"
+    });
+  }
+
+  for(let event of eventList){
+    // Set group
+    event.Group = group.toJSON();
+
+    //Set numAttending
+
+    // let numAttending = 0;
+    // event.Attendances.forEach(person => {
+    //   if(person.status === 'attending') numAttending++;
+    // })
+    event.numAttending = await Attendance.count({
+      where: {
+        status: 'attending',
+        eventId: event.id
+      }
+    });
+    delete event.Attendances;
+    if(event.EventImages.length > 0){
+      event.previewImage = event.EventImages[0].url;
+    }
+    else{
+      event.previewImage = null;
+    }
+    delete event.EventImages;
+  }
+  let responseObj = {};
+  responseObj.Events = eventList;
+  res.json(responseObj);
 })
 
 module.exports = router;
