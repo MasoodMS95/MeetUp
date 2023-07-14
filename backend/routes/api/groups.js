@@ -51,6 +51,61 @@ const validateVenue = [
   handleValidationErrors
 ]
 
+const validateEvent = [
+  check('venueId')
+    .custom(async (venueId, { req }) => {
+      const venue = await Venue.findOne({
+        where: {
+          id: venueId
+        }
+      });
+      if(venue){
+        return true;
+      }
+      throw new Error('Venue does not exist');
+    }),
+  check('name')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 5 })
+    .withMessage("Name must be at least 5 characters"),
+  check('type')
+    .isIn(['Online', 'In person'])
+    .withMessage("Type must be Online or In person"),
+  check('capacity')
+    .isNumeric()
+    .withMessage("Capacity must be an integer"),
+  check('price')
+    .isDecimal()
+    .custom(async (price, { req }) => {
+      if(price > 0){
+        return true;
+      }
+      throw new Error("Price is invalid");
+    })
+    .withMessage("Price is invalid"),
+  check('description')
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+  check('startDate')
+    .custom(async (startDate, { req }) => {
+      let currDate = new Date();
+      let enteredDate = new Date(startDate);
+      if(enteredDate < currDate){
+        throw new Error("Start date must be in the future");
+      }
+      return true;
+    }),
+  check('endDate')
+    .custom(async (endDate, { req }) => {
+      let startDate = new Date(req.body.startDate);
+      let end = new Date(endDate);
+      if(startDate >= end){
+        throw new Error("End date is less than start date");
+      }
+      return true;
+    }),
+  handleValidationErrors];
+
 
 //Get all groups
 router.get('/', async (req, res) => {
@@ -217,7 +272,7 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
   });
   if(group && group.organizerId === req.user.id){
     await group.destroy();
-    res.json({
+    return res.json({
       "message": "Successfully deleted"
     })
   }
@@ -309,6 +364,8 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
   });
 })
 
+
+//Get all Events of a Group specified by its id
 router.get('/:groupId/events', async (req, res) => {
   const events = await Event.findAll({
     where:{
@@ -348,7 +405,7 @@ router.get('/:groupId/events', async (req, res) => {
   })
   if(!group){
     res.statusCode = 404;
-    res.json({
+    return res.json({
       "message": "Group couldn't be found"
     });
   }
@@ -381,6 +438,40 @@ router.get('/:groupId/events', async (req, res) => {
   let responseObj = {};
   responseObj.Events = eventList;
   res.json(responseObj);
-})
+});
+
+
+//Create an Event for a Group specified by its id
+router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => {
+  const group = await Group.findOne({
+    where: {
+      id: req.params.groupId
+    },
+    include: [{
+      model: Membership
+    }]
+  });
+  if(group){
+    let parsed = group.toJSON();
+    let confirmed = false;
+    if(parsed.organizerId === req.user.id) confirmed = true;
+    parsed.Memberships.forEach(member => {
+      if(member.userId === req.user.id && member.status === 'co-host'){
+        confirmed = true;
+      }
+    });
+    if(confirmed){
+      const event = await group.createEvent(req.body);
+      const copy = event.toJSON();
+      delete copy.updatedAt;
+      delete copy.createdAt
+      return res.json(copy);
+    }
+  }
+  res.statusCode = 404;
+  res.json({
+    "message": "Group couldn't be found"
+  })
+});
 
 module.exports = router;
