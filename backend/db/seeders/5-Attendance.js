@@ -21,9 +21,14 @@ module.exports = {
     */
     await Attendance.bulkCreate([
       {
-        eventId: 1,
+        eventId: 3,
         userId: 1,
-        status: 'pending'
+        status: 'waitlist'
+      },
+      {
+        eventId: 5,
+        userId: 1,
+        status: 'attending'
       },
       {
         eventId: 2,
@@ -33,6 +38,16 @@ module.exports = {
       {
         eventId: 3,
         userId: 3,
+        status: 'pending'
+      },
+      {
+        eventId: 1,
+        userId: 4,
+        status: 'attending'
+      },
+      {
+        eventId: 4,
+        userId: 4,
         status: 'attending'
       },
     ], { validate: true });

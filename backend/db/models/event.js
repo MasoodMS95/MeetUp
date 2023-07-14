@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Event.belongsTo(
         models.Venue,
-        {foreignKey: 'venueId', onDelete: 'CASCADE',  hooks: true }
+        {foreignKey: 'venueId'}
       );
       Event.hasMany(
         models.EventImage,
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       values: ['Online', 'In person']
     },
     capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    price: DataTypes.DECIMAL,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE
   }, {
