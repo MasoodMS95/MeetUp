@@ -328,4 +328,258 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 })
 
 
+//Attendants
+//Get all Attendees of an Event specified by its id
+router.get('/:eventId/attendees', async (req, res) => {
+  const event = await Event.findOne({
+    where: {
+      id: req.params.eventId
+    }
+  });
+
+  if(!event){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Event couldn't be found"
+    });
+  }
+
+  const group = await Group.findOne({
+    where: {
+      id: event.toJSON().groupId
+    },
+    include: [
+      {
+       model: Membership
+      }
+    ]
+  });
+
+  let confirmed = false;
+  let parsed = group.toJSON();
+  if(parsed.organizerId === req.user.id) confirmed = true;
+  parsed.Memberships.forEach(member => {
+    if(member.userId === req.user.id && member.status === 'co-host'){
+      confirmed = true;
+    }
+  })
+  const attendees = await Attendance.findAll({
+    where: {
+      eventId: req.params.eventId
+    }
+  });
+  const users = await User.findAll();
+  let attending = [];
+  attendees.forEach(attendee => {
+    users.forEach(user => {
+      if(attendee.toJSON().userId === user.toJSON().id){
+        let obj = {...user.toJSON()}
+        obj.Attendance = {};
+        obj.Attendance.status = attendee.toJSON().status;
+        delete obj.username;
+        attending.push(obj);
+      }
+    })
+  })
+  let response = {};
+  if(confirmed){
+    response.Attendees = attending;
+  }
+  else{
+    response.Attendees = attending.filter(attendee => attendee.Attendance.status !== 'pending')
+  }
+  res.json(response);
+});
+
+
+// Request to Attend an Event based on the Event's id
+router.post('/:eventId/attendance', requireAuth, async (req, res) => {
+  const event = await Event.findOne({
+    where: {
+      id: req.params.eventId
+    }
+  });
+
+  if(!event){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Event couldn't be found"
+    });
+  }
+
+  const group = await Group.findOne({
+    where: {
+      id: event.toJSON().groupId
+    },
+    include: [
+      {
+       model: Membership
+      }
+    ]
+  });
+
+  let isMember = false;
+  group.toJSON().Memberships.forEach(member => {
+    if(member.userId === req.user.id && member.status !== 'pending'){
+      isMember = true;
+    }
+  })
+  if(group.toJSON().organizerId === req.user.id) isMember = true;
+
+  const att = await Attendance.findAll({
+    where: {
+      eventId: req.params.eventId
+    }
+  });
+  console.log(isMember);
+  for(let attendant of att){
+    let pAtt = attendant.toJSON();
+    if(pAtt.userId === req.body.userId){
+      res.statusCode = 400;
+      if(pAtt.status === 'pending'){
+        return res.json({
+          "message": "Attendance has already been requested"
+        })
+      }
+      else{
+        return res.json({
+          "message": "User is already an attendee of the event"
+        });
+      }
+    }
+  }
+
+  const reservation = await Attendance.create({
+    eventId: req.params.eventId,
+    userId: req.body.userId,
+    status: 'pending'
+  });
+
+  res.json(req.body)
+});
+
+
+//Change the status of an attendance for an event specified by id
+router.put('/:eventId/attendance',requireAuth, async (req, res) => {
+  if(req.body.status === 'pending'){
+    res.statusCode = 400;
+    return res.json({
+      "message": "Cannot change an attendance status to pending"
+    })
+  }
+  const event = await Event.findOne({
+    where: {
+      id: req.params.eventId
+    }
+  });
+
+  if(!event){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Event couldn't be found"
+    });
+  }
+
+  const group = await Group.findOne({
+    where: {
+      id: event.toJSON().groupId
+    },
+    include: [
+      {
+       model: Membership
+      }
+    ]
+  });
+
+  let confirmed = false;
+  let parsed = group.toJSON();
+  if(parsed.organizerId === req.user.id) confirmed = true;
+  parsed.Memberships.forEach(member => {
+    if(member.userId === req.user.id && member.status === 'co-host'){
+      confirmed = true;
+    }
+  })
+  const attendees = await Attendance.findOne({
+    where: {
+      eventId: req.params.eventId,
+      userId: req.body.userId
+    }
+  });
+  if(!attendees){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Attendance between the user and the event does not exist"
+    });
+  }
+  if(confirmed){
+    attendees.set({status: req.body.status})
+    await attendees.save();
+    let response = {};
+    response.id = attendees.toJSON().id;
+    response.eventId=attendees.toJSON().eventId;
+    response.user=attendees.toJSON().userId;
+    response.status = attendees.toJSON().status;
+    res.json(response);
+  }
+  else{
+    res.status(403).json({
+      "message": "Unauthorirzed to perform this operation"
+    })
+  }
+});
+
+
+//Delete attendance to an event specified by id
+router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
+  const event = await Event.findOne({
+    where: {
+      id: req.params.eventId
+    }
+  });
+
+  if(!event){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Event couldn't be found"
+    });
+  }
+  const group = await Group.findOne({
+    where: {
+      id: event.toJSON().groupId
+    },
+  })
+  if(!group){
+    return res.status(404).json({
+      "message": "Group couldn't be found"
+    });
+  }
+  //parse data and find all permissions for current user.
+  let parsed = group.toJSON();
+  let isOwner = false;
+  if(parsed.organizerId === req.user.id || req.body.userId === req.user.id) isOwner = true;
+
+  const attendees = await Attendance.findOne({
+    where: {
+      eventId: req.params.eventId,
+      userId: req.body.userId
+    }
+  });
+  if(!attendees){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Attendance does not exist for this User"
+    });
+  }
+  if(isOwner){
+    await attendees.destroy();
+    res.json({
+      "message": "Successfully deleted attendance from event"
+    });
+  }
+  else{
+    res.status(403).json({
+      "message": "Unauthorirzed to perform this operation"
+    })
+  }
+})
 module.exports = router;
