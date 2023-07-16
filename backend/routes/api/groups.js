@@ -182,18 +182,24 @@ router.get('/current', requireAuth, async (req, res) => {
     },
     {
       model: Membership,
-      where: {
-        userId: req.user.id
-      },
     }
   ]});
 
   let groupList = [];
-
   data.forEach(group => {
-    groupList.push(group.toJSON());
+    if(group.toJSON().organizerId === req.user.id){
+      groupList.push(group.toJSON());
+    }
+    else{
+      for(let member of group.toJSON().Memberships) {
+        if(member.userId === req.user.id){
+          groupList.push(group.toJSON());
+          break;
+        }
+      }
+    }
   })
-
+  console.log(groupList);
   groupList.forEach(group => {
     group.numMembers = group.Memberships.length;
     delete group.Memberships;
