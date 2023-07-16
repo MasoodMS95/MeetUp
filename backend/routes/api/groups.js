@@ -199,7 +199,6 @@ router.get('/current', requireAuth, async (req, res) => {
       }
     }
   })
-  console.log(groupList);
   groupList.forEach(group => {
     group.numMembers = group.Memberships.length;
     delete group.Memberships;
