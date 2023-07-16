@@ -54,7 +54,7 @@ router.delete('/:imageId', requireAuth, async (req,res) => {
   }
   else{
     return res.status(403).json({
-      "message": "Unauthorirzed to perform this operation"
+      "message": "Forbidden"
     })
   }
 })

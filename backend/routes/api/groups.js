@@ -269,21 +269,32 @@ router.post('/', requireAuth, validateGroup, async (req, res) => {
   res.json(group);
 });
 
-//add image to group based on group id
+//add an image to group based on group id
 router.post('/:groupId/images', requireAuth, async (req, res) => {
   const group = await Group.findOne({
     where: {
       id: req.params.groupId
     }
   });
+  if(!group){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Group couldn't be found"
+    })
+  }
   if(group.organizerId === req.user.id){
     const newEntry = await group.createGroupImage(req.body);
-    return res.json(newEntry);
+    let copy = {};
+    copy.id = newEntry.id;
+    copy.url = newEntry.url;
+    copy.preview = newEntry.preview;
+    return res.json(copy);
   }
-  res.statusCode = 404;
-  res.json({
-    "message": "Group couldn't be found"
-  })
+  else{
+    res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 });
 
 
@@ -294,15 +305,22 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res) => {
       id: req.params.groupId
     }
   });
-  if(group && group.organizerId === req.user.id){
+  if(!group){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Group couldn't be found"
+    });
+  }
+  if(group.organizerId === req.user.id){
     group.set(req.body);
     await group.save();
     return res.json(group);
   }
-  res.statusCode = 404;
-  res.json({
-    "message": "Group couldn't be found"
-  });
+  else{
+    res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 });
 
 
@@ -313,16 +331,23 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
       id: req.params.groupId
     }
   });
-  if(group && group.organizerId === req.user.id){
+  if(!group){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Group couldn't be found"
+    });
+  }
+  if(group.organizerId === req.user.id){
     await group.destroy();
     return res.json({
       "message": "Successfully deleted"
     })
   }
-  res.statusCode = 404;
-  res.json({
-    "message": "Group couldn't be found"
-  });
+  else{
+    res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 })
 
 
@@ -510,6 +535,11 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
       delete copy.createdAt
       return res.json(copy);
     }
+    else{
+      return res.status(403).json({
+        "message": "Forbidden"
+      })
+    }
   }
   res.statusCode = 404;
   res.json({
@@ -675,7 +705,7 @@ router.put('/:groupId/membership', requireAuth, validateMembershipChange, async 
   }
   else{
     return res.status(403).json({
-      "message": "Unauthorized to make this change."
+      "message": "Forbidden"
     })
   }
 });
@@ -717,7 +747,7 @@ router.delete('/:groupId/membership', requireAuth, validateMembershipDeletion,  
   }
   else{
     res.status(403).json({
-      "message": "Unauthorized to perform this action"
+      "message": "Forbidden"
     })
   }
 })

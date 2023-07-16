@@ -234,11 +234,11 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
     delete parsed.createdAt;
     return res.json(parsed);
   }
-
-  res.statusCode = 404;
-  res.json({
-    "message": "Event couldn't be found"
-  });
+  else{
+    return res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 });
 
 router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
@@ -431,10 +431,10 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
       eventId: req.params.eventId
     }
   });
-  console.log(isMember);
+
   for(let attendant of att){
     let pAtt = attendant.toJSON();
-    if(pAtt.userId === req.body.userId){
+    if(pAtt.userId === req.user.id){
       res.statusCode = 400;
       if(pAtt.status === 'pending'){
         return res.json({
@@ -451,11 +451,14 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 
   const reservation = await Attendance.create({
     eventId: req.params.eventId,
-    userId: req.body.userId,
+    userId: req.user.id,
     status: 'pending'
   });
 
-  res.json(req.body)
+  res.json({
+    "userId": req.user.id,
+    "status": "pending"
+  })
 });
 
 
