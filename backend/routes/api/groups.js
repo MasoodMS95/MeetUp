@@ -200,7 +200,10 @@ router.get('/current', requireAuth, async (req, res) => {
     }
   })
   groupList.forEach(group => {
-    group.numMembers = group.Memberships.length;
+    if(group.Memberships.length){
+      group.numMembers = group.Memberships.length;
+    }
+    else group.numMembers = 1;
     delete group.Memberships;
     if(group.GroupImages.length){
       group.GroupImages.forEach(image => {
