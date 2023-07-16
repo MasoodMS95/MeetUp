@@ -253,7 +253,6 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     "message": "Event couldn't be found"
   });
   }
-
   //Get groups and roles
   const group = await Group.findOne({
     where:{
@@ -278,10 +277,11 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     delete copy.updatedAt;
     return res.json(copy);
   }
-  res.statusCode = 404;
-  res.json({
-    "message": "Event couldn't be found"
-  });
+  else{
+    return res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 });
 
 
@@ -321,10 +321,11 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
       "message": "Successfully deleted"
     });
   }
-  res.statusCode = 404;
-  res.json({
-    "message": "Event couldn't be found"
-  });
+  else{
+    return res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 })
 
 
@@ -449,16 +450,23 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
     }
   }
 
-  const reservation = await Attendance.create({
-    eventId: req.params.eventId,
-    userId: req.user.id,
-    status: 'pending'
-  });
+  if(isMember){
+    const reservation = await Attendance.create({
+      eventId: req.params.eventId,
+      userId: req.user.id,
+      status: 'pending'
+    });
+    res.json({
+      "userId": req.user.id,
+      "status": "pending"
+    })
+  }
+  else{
+    return res.status(403).json({
+      "message": "Forbidden"
+    })
+  }
 
-  res.json({
-    "userId": req.user.id,
-    "status": "pending"
-  })
 });
 
 
