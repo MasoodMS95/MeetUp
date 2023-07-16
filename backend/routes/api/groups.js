@@ -202,11 +202,14 @@ router.get('/current', requireAuth, async (req, res) => {
   groupList.forEach(group => {
     group.numMembers = group.Memberships.length;
     delete group.Memberships;
-    group.GroupImages.forEach(image => {
-      if(image.preview){
-        group.previewImage = image.url;
-      }
-    });
+    if(group.GroupImages.length){
+      group.GroupImages.forEach(image => {
+        if(image.preview){
+          group.previewImage = image.url;
+        }
+      });
+    }
+    else{group.previewImage = "No image available"}
     delete group.GroupImages;
   })
 
