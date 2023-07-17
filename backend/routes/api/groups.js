@@ -140,7 +140,7 @@ const validateEvent = [
   ]
 
 //Get all groups
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   const data = await Group.findAll({
     include:[
     {
