@@ -433,12 +433,17 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
       delete copy.createdAt
       return res.json(copy);
     }
+    else{
+      return res.status(403).json({
+        "message": "Forbidden"
+      })
+    }
+  }else{
+    res.statusCode = 404;
+    res.json({
+      "message": "Group couldn't be found"
+    });
   }
-
-  res.statusCode = 404;
-  res.json({
-    "message": "Group couldn't be found"
-  });
 })
 
 
