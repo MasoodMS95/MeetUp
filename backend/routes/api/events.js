@@ -3,10 +3,29 @@ const router = express.Router();
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Group, GroupImage, Membership, Venue, User, Event, EventImage, Attendance } = require('../../db/models');
 
+const validateQuery = [
+  query('page')
+    .custom(async (page, { req }) => {
+      if(page >= 1 && page <= 10){
+        return true;
+      }
+      throw new Error("Page must be greater than or equal to 1");
+    })
+    .withMessage("Page must be greater than or equal to 1"),
+  query('size')
+    .custom(async (size, { req }) => {
+      if(size >= 1 && size <= 20){
+        return true;
+      }
+      throw new Error("Size must be greater than or equal to 1");
+    })
+    .withMessage("Size must be greater than or equal to 1"),
+    handleValidationErrors
+]
 const validateEvent = [
   check('venueId')
     .custom(async (venueId, { req }) => {
@@ -62,9 +81,18 @@ const validateEvent = [
     }),
   handleValidationErrors];
 
+  
 //get all events
-router.get('/', async (req, res) => {
+router.get('/', validateQuery, async (req, res) => {
+  const page = req.query.page===undefined ? 1 : parseInt(req.query.page);
+  const size = req.query.page===undefined ? 20 : parseInt(req.query.size);
+
+  const limit = size;
+  const offset = (page - 1) * size;
+
   const events = await Event.findAll({
+    limit,
+    offset,
     attributes: {
       exclude: ['createdAt', 'updatedAt', 'capacity', 'price', 'description']
     },
@@ -84,6 +112,7 @@ router.get('/', async (req, res) => {
       attributes: ['id', 'city', 'state']
     },
   ]});
+
 
   //Populate EventList
   const eventList = [];
