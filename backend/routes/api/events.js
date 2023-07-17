@@ -134,6 +134,9 @@ router.get('/', validateQuery, async (req, res) => {
         eventId: event.id
       }
     });
+    if(event.numAttending === 0){
+      event.numAttending = 1;
+    }
     delete event.Attendances;
     if(event.EventImages.length > 0){
       event.previewImage = event.EventImages[0].url;
@@ -610,7 +613,7 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
   }
   else{
     res.status(403).json({
-      "message": "Unauthorirzed to perform this operation"
+      "message": "Only the User or organizer may delete an Attendance"
     })
   }
 })

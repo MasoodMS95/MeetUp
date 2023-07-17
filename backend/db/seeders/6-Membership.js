@@ -20,7 +20,7 @@ module.exports = {
     await Membership.bulkCreate([
       {
         userId: 1,
-        groupId: 1,
+        groupId: 3,
         status: 'member'
       },
       {

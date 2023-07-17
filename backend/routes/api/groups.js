@@ -552,7 +552,8 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
       const event = await group.createEvent(req.body);
       const copy = event.toJSON();
       delete copy.updatedAt;
-      delete copy.createdAt
+      delete copy.createdAt;
+      //TO DO: Add attendance for organizer of event.
       return res.json(copy);
     }
     else{
