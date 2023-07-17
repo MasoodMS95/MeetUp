@@ -382,12 +382,14 @@ router.get('/:eventId/attendees', async (req, res) => {
 
   let confirmed = false;
   let parsed = group.toJSON();
-  if(parsed.organizerId === req.user.id) confirmed = true;
-  parsed.Memberships.forEach(member => {
-    if(member.userId === req.user.id && member.status === 'co-host'){
-      confirmed = true;
-    }
-  })
+  if(req.user){
+    if(parsed.organizerId === req.user.id) confirmed = true;
+    parsed.Memberships.forEach(member => {
+      if(member.userId === req.user.id && member.status === 'co-host'){
+        confirmed = true;
+      }
+    })
+  }
   const attendees = await Attendance.findAll({
     where: {
       eventId: req.params.eventId

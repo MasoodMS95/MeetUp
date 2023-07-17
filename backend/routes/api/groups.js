@@ -571,6 +571,10 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
 
 //Get all Members of a Group specified by its id
 router.get('/:groupId/members', async (req, res) => {
+  if(!req.user){
+    req.user = {};
+    req.user.id = -1;
+  }
   const group = await Group.findOne({
     where: {
       id: req.params.groupId
