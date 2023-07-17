@@ -438,7 +438,8 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
         "message": "Forbidden"
       })
     }
-  }else{
+  }
+  else{
     res.statusCode = 404;
     res.json({
       "message": "Group couldn't be found"
