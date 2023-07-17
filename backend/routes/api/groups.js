@@ -157,13 +157,19 @@ router.get('/', async (req, res) => {
   })
 
   groupList.forEach(group => {
-    group.numMembers = group.Memberships.length;
+    if(group.Memberships.length){
+      group.numMembers = group.Memberships.length;
+    }
+    else group.numMembers = 1;
     delete group.Memberships;
-    group.GroupImages.forEach(image => {
-      if(image.preview){
-        group.previewImage = image.url;
-      }
-    });
+    if(group.GroupImages.length){
+      group.GroupImages.forEach(image => {
+        if(image.preview){
+          group.previewImage = image.url;
+        }
+      });
+    }
+    else{group.previewImage = "No image available"}
     delete group.GroupImages;
   })
 
@@ -222,7 +228,7 @@ router.get('/current', requireAuth, async (req, res) => {
 })
 
 
-//Get user by groupID
+//Get details of a Group from an id
 router.get('/:groupId', requireAuth, async (req, res) => {
   const data = await Group.findOne({
     where: {
@@ -253,7 +259,10 @@ router.get('/:groupId', requireAuth, async (req, res) => {
     attributes: ['id', 'firstName', 'lastName']
   })
 
-  parsed.numMembers = parsed.Memberships.length;
+  if(parsed.Memberships.length){
+    parsed.numMembers = parsed.Memberships.length;
+  }
+  else parsed.numMembers = 1;
   delete parsed.Memberships
 
   parsed.Organizer = organizer;
