@@ -140,7 +140,7 @@ const validateEvent = [
   ]
 
 //Get all groups
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   const data = await Group.findAll({
     include:[
     {
@@ -229,7 +229,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 //Get details of a Group from an id
-router.get('/:groupId', requireAuth, async (req, res) => {
+router.get('/:groupId', async (req, res) => {
   const data = await Group.findOne({
     where: {
       id: req.params.groupId
