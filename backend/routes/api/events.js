@@ -9,22 +9,14 @@ const { Group, GroupImage, Membership, Venue, User, Event, EventImage, Attendanc
 
 const validateQuery = [
   query('page')
-    .custom(async (page, { req }) => {
-      if(page >= 1 && page <= 10){
-        return true;
-      }
-      throw new Error("Page must be greater than or equal to 1");
-    })
+    .optional()
+    .isFloat({ min: 1, max: 10 })
     .withMessage("Page must be greater than or equal to 1"),
   query('size')
-    .custom(async (size, { req }) => {
-      if(size >= 1 && size <= 20){
-        return true;
-      }
-      throw new Error("Size must be greater than or equal to 1");
-    })
+    .optional()
+    .isFloat({ min: 1, max: 20 })
     .withMessage("Size must be greater than or equal to 1"),
-    handleValidationErrors
+  handleValidationErrors
 ]
 const validateEvent = [
   check('venueId')
@@ -81,7 +73,7 @@ const validateEvent = [
     }),
   handleValidationErrors];
 
-  
+
 //get all events
 router.get('/', validateQuery, async (req, res) => {
   const page = req.query.page===undefined ? 1 : parseInt(req.query.page);
