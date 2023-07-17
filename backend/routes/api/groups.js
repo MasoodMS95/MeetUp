@@ -394,6 +394,11 @@ router.get('/:groupId/venues', requireAuth, async (req, res) => {
       response.Venues = parsed.Venues;
       return res.json(response);
     }
+    else{
+      return res.status(403).json({
+        "message": "Forbidden"
+      })
+    }
   }
 
   res.statusCode = 404;
@@ -712,6 +717,7 @@ router.put('/:groupId/membership', requireAuth, validateMembershipChange, async 
   else if(req.body.status === 'co-host' && isOwner){
     member.set({status: req.body.status})
     await member.save();
+    let copy = {};
     copy.id = member.id;
     copy.groupId = req.params.groupId;
     copy.memberId = member.userId;

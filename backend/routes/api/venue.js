@@ -59,6 +59,11 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res) => {
         delete response.updatedAt;
         return res.json(response);
       }
+      else{
+        return res.status(403).json({
+          "message": "Forbidden"
+        })
+      }
     }
   }
   res.statusCode = 404;

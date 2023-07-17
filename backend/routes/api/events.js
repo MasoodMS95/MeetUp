@@ -554,8 +554,8 @@ router.put('/:eventId/attendance',requireAuth, async (req, res) => {
     res.json(response);
   }
   else{
-    res.status(403).json({
-      "message": "Unauthorirzed to perform this operation"
+    return res.status(403).json({
+      "message": "Forbidden"
     })
   }
 });

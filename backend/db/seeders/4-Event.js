@@ -73,6 +73,17 @@ module.exports = {
         startDate: "2022-03-03",
         endDate: "2022-03-03"
       },
+      {
+        venueId: 2,
+        groupId: 3,
+        name: "Shenanigans and Mistakes",
+        description: "We're getting into all sorts of shenanigans out here. We do all sorts of things like such as that and this and then we do that as well.",
+        type: "In person",
+        capacity: 3,
+        price: 3,
+        startDate: "2022-03-03",
+        endDate: "2022-03-03"
+      },
     ], { validate: true });
   },
 
