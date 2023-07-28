@@ -6,6 +6,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Group, GroupImage, Membership, Venue, User, EventImage, Attendance, Event } = require('../../db/models');
 
+//Delete a group's image
 router.delete('/:imageId', requireAuth, async (req,res) => {
   const img = await GroupImage.findOne({
     where: {
