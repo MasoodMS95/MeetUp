@@ -157,10 +157,7 @@ router.get('/', async (req, res) => {
   })
 
   groupList.forEach(group => {
-    if(group.Memberships.length){
-      group.numMembers = group.Memberships.length;
-    }
-    else group.numMembers = 1;
+    group.numMembers = group.Memberships.length;
     delete group.Memberships;
     if(group.GroupImages.length){
       group.GroupImages.forEach(image => {
@@ -206,10 +203,7 @@ router.get('/current', requireAuth, async (req, res) => {
     }
   })
   groupList.forEach(group => {
-    if(group.Memberships.length){
-      group.numMembers = group.Memberships.length;
-    }
-    else group.numMembers = 1;
+    group.numMembers = group.Memberships.length;
     delete group.Memberships;
     if(group.GroupImages.length){
       group.GroupImages.forEach(image => {
@@ -259,10 +253,7 @@ router.get('/:groupId', async (req, res) => {
     attributes: ['id', 'firstName', 'lastName']
   })
 
-  if(parsed.Memberships.length){
-    parsed.numMembers = parsed.Memberships.length;
-  }
-  else parsed.numMembers = 1;
+  parsed.numMembers = parsed.Memberships.length;
   delete parsed.Memberships
 
   parsed.Organizer = organizer;
@@ -274,6 +265,7 @@ router.get('/:groupId', async (req, res) => {
 router.post('/', requireAuth, validateGroup, async (req, res) => {
   const organizerId = req.user.id;
   const group = await Group.create({organizerId, ...req.body})
+  await Membership.create({userId: req.user.id, groupId: group.id, status: 'co-host'})
   res.statusCode = 201;
   res.json(group);
 });
@@ -550,10 +542,11 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
     });
     if(confirmed){
       const event = await group.createEvent(req.body);
+      await Attendance.create({eventId: event.id, userId: req.user.id, status: "attending"})
       const copy = event.toJSON();
       delete copy.updatedAt;
       delete copy.createdAt;
-      //TO DO: Add attendance for organizer of event.
+      console.log(copy);
       return res.json(copy);
     }
     else{

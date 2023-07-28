@@ -134,9 +134,6 @@ router.get('/', validateQuery, async (req, res) => {
         eventId: event.id
       }
     });
-    if(event.numAttending === 0){
-      event.numAttending = 1;
-    }
     delete event.Attendances;
     if(event.EventImages.length > 0){
       event.previewImage = event.EventImages[0].url;
