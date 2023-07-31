@@ -1,0 +1,60 @@
+
+@media screen and (max-width:333px){
+  .signupField{
+    margin-bottom: 1rem;
+    align-self: flex-start;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+}
+
+.signupPage{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.signupPage p{
+  align-self: center;
+  margin-top: -10px;
+}
+
+.signupPage > h1{
+  border-bottom: solid black 1px;
+  color: red;
+  padding: 2px 15px;
+  text-align: center;
+}
+
+.signupField{
+  margin-bottom: 1rem;
+  align-self: flex-end;
+}
+
+.signupPage input{
+  width: auto;
+  margin-left: .5rem;
+}
+
+.signupPage>form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: auto;
+  font-weight: bold;
+}
+
+.signupPage button{
+  align-self: center;
+  width: 30%;
+}
+
+.signupPage button:hover{
+  border: solid 1.2px;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px darkgray;
+}

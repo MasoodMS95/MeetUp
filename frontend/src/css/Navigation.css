@@ -1,0 +1,57 @@
+.NavBar{
+  border-bottom:solid black 1px;
+  display: flex;
+  flex-basis: 100%;
+  justify-content: space-between;
+  width: 90%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+}
+
+.navButtons{
+  display:flex;
+  flex-direction: column;
+  row-gap: 5px;
+  align-items:flex-end;
+}
+
+.navLoggedOut{
+  flex-direction:row;
+  column-gap:10px;
+}
+
+.navButtons>button{
+  width:auto;
+  column-gap: 20px;
+}
+
+.navLoggedOut>button:hover{
+  border: solid black 1px;
+}
+
+.navButtons>a:hover, .homeButton>a:hover{
+border-bottom: solid 1px black;
+  cursor:pointer;
+  font-weight: bold;
+}
+
+.NavBar li{
+  list-style:none;
+}
+
+.profile-dropdown{
+  border: solid black 1px;
+  color:green;
+  display:flex;
+  flex-direction: column;
+  margin-top:5px;
+  padding: 5px 10px;
+}
+
+.homeButton>a{
+  font-size: 24px;
+  color:red;
+  text-decoration: none;
+  cursor:pointer;
+}

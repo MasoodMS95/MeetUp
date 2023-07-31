@@ -1,0 +1,52 @@
+
+@media screen and (max-width:332px){
+  .credential, .password{
+    display:flex;
+    flex-direction:column;
+  }
+}
+
+.loginPage{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.loginPage > h1{
+  border-bottom: solid black 1px;
+  color: red;
+  padding: 2px 15px;
+  text-align: center;
+}
+
+.credential, .password{
+  margin-bottom: 1rem;
+  align-self: flex-end;
+}
+
+.loginPage input{
+  width: auto;
+  margin-left: .5rem;
+}
+
+.loginPage>form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: auto;
+  font-weight: bold;
+}
+
+.loginPage button{
+  align-self: center;
+  width: 30%;
+}
+
+.loginPage button:hover{
+  border: solid 1.2px;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px darkgray;
+}
