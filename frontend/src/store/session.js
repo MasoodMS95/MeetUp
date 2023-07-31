@@ -33,8 +33,17 @@ export const getUser = () => async (dispatch) => {
   if(res.ok){
     let parsedUser = await res.json();
     dispatch(loginAction(parsedUser.user));
+    return parsedUser;
   }
 }
+
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(logoutAction());
+  return response;
+};
 
 export const signup = (user) => async (dispatch) => {
   const { username, firstName, lastName, email, password } = user;
@@ -63,7 +72,7 @@ const sessionReducer = (state = {user:null}, action) => {
     case LOG_OUT_SESSION:
       const loggedOutUser = {};
       loggedOutUser.user = null;
-      return newUser;
+      return loggedOutUser;
     default:
       return state;
   }
