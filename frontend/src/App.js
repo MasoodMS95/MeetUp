@@ -15,7 +15,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <React.Fragment>
-        <h1>Ayyy yo what's up it's ya boy vinny.</h1>
+        <h1>Welcome to my app.</h1>
         <Switch>
         </Switch>
       </React.Fragment>
