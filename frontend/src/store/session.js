@@ -28,6 +28,31 @@ export const login = (user) => async (dispatch) =>{
   return await res.json();
 }
 
+export const getUser = () => async (dispatch) => {
+  const res = await csrfFetch('/api/session');
+  if(res.ok){
+    let parsedUser = await res.json();
+    dispatch(loginAction(parsedUser.user));
+  }
+}
+
+export const signup = (user) => async (dispatch) => {
+  const { username, firstName, lastName, email, password } = user;
+  const response = await csrfFetch("/api/users", {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+    }),
+  });
+  const data = await response.json();
+  dispatch(loginAction(data.user));
+  return response;
+};
+
 //Reducer
 const sessionReducer = (state = {user:null}, action) => {
   switch (action.type) {

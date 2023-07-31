@@ -4,3 +4,7 @@ body{
   background-color: rgba(216, 216, 216, 0.523);
   width:100%;
 }
+
+p{
+  color: red;
+}
