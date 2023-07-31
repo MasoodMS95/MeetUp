@@ -546,7 +546,6 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
       const copy = event.toJSON();
       delete copy.updatedAt;
       delete copy.createdAt;
-      console.log(copy);
       return res.json(copy);
     }
     else{
