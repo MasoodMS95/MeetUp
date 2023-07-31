@@ -22,17 +22,17 @@ module.exports = {
     await EventImage.bulkCreate([
       {
         eventId: 1,
-        url: '/bigChungus',
+        url: '/sample',
         preview: true
       },
       {
         eventId: 2,
-        url: '/wideKiryu',
+        url: '/sample',
         preview: false
       },
       {
         eventId: 3,
-        url: '/shortMajima',
+        url: '/sample',
         preview: false
       },
     ], { validate: true });

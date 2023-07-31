@@ -19,17 +19,17 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: '/coolboys',
+        url: '/sample',
         preview: true
       },
       {
         groupId: 2,
-        url: '/lameboys',
+        url: '/sample',
         preview: true
       },
       {
         groupId: 3,
-        url: '/shenaniganboys',
+        url: '/sample',
         preview: true
       },
     ], { validate: true });
