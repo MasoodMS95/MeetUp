@@ -23,12 +23,11 @@
 
 .navButtons>button{
   width:auto;
+  column-gap: 20px;
 }
 
-.navButtons>a{
-  color:red;
-  column-gap: 20px;
-  text-decoration: none;
+.navLoggedOut>button:hover{
+  border: solid black 1px;
 }
 
 .navButtons>a:hover, .homeButton>a:hover{
