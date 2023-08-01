@@ -29,21 +29,15 @@ function LoginFormModal() {
     <h1>Log In</h1>
     <form onSubmit={handleSubmit}>
       <div className='credential'>
-        <label>
-          Username or Email:
-        </label>
         <input
             type="text"
             value={credential}
-            placeholder="Email or Username"
+            placeholder="Username or Email"
             onChange={(e) => setCredential(e.target.value)}
             required
         />
       </div>
       <div className='password'>
-        <label>
-          Password:
-        </label>
         <input
             type="password"
             value={password}
