@@ -244,6 +244,13 @@ router.get('/:groupId', async (req, res) => {
     }
   ]});
 
+  if(!data){
+    res.statusCode = 404;
+    return res.json({
+      "message": "Group couldn't be found"
+    })
+  }
+
   const parsed = data.toJSON();
 
   const organizer = await User.findOne({
