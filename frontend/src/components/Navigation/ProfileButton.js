@@ -13,7 +13,22 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
+
+  const setChevron = () => {
+    if(showMenu){
+      return (
+        <i class="fa-solid fa-chevron-down" />
+      )
+    }
+    else{
+      return (
+        <i class="fa-solid fa-chevron-up" />
+      )
+    }
+  }
+
   useEffect(() => {
+    setChevron();
     if (!showMenu) return;
 
     const closeMenu = (e) => {
@@ -38,6 +53,7 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
+        {setChevron()}
       </button>
       {showMenu && <ul className={ulClassName} ref={ulRef}>
         <li>Username: {user.username}</li>

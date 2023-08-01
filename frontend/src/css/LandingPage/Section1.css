@@ -1,0 +1,22 @@
+.section1Container{
+  align-self: center;
+  column-gap: 5%;
+  display: flex;
+  justify-content: center;
+  margin-left: 4%;
+}
+
+.section1-left{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+  width: 40%;
+}
+
+.section1Container img{
+  height: auto;
+  max-width: 45%;
+  width:auto;
+}

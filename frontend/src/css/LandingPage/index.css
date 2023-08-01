@@ -1,0 +1,7 @@
+.landingPageContainer{
+  display: flex;
+  flex-direction: column;
+  margin-left: 45px;
+  margin-top: 4%;
+  row-gap: 25px;
+}

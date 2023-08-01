@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "../../css/LoginFormPage.css";
+import "../../css/Navigation/LoginFormPage.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ function LoginFormModal() {
             required
           />
       </div>
-      {errors.credential && <p>{errors.credential}</p>}
+      {errors.credential && <p className="errors">{errors.credential}</p>}
       <button type="submit">Log In</button>
     </form>
   </div>

@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Navigation from "./components/Navigation";
 import * as sessionActions from './store/session'
+import LandingPage from './components/LandingPage'
 
 function App() {
   const dispatch = useDispatch();
@@ -15,8 +16,10 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <React.Fragment>
-        <h1>Welcome to my app.</h1>
         <Switch>
+          <Route exact path='/'>
+            <LandingPage/>
+          </Route>
         </Switch>
       </React.Fragment>
       )}

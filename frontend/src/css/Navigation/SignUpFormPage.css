@@ -16,6 +16,7 @@
   justify-content: center;
   width: 100%;
   height: auto;
+  padding-right: 40px;
 }
 
 .signupPage p{
@@ -32,7 +33,7 @@
 
 .signupField{
   margin-bottom: 1rem;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .signupPage input{
@@ -50,7 +51,7 @@
 
 .signupPage button{
   align-self: center;
-  width: 30%;
+  width: 50%;
 }
 
 .signupPage button:hover{

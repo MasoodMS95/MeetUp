@@ -1,19 +1,24 @@
 .NavBar{
   border-bottom:solid black 1px;
   display: flex;
-  flex-basis: 100%;
   justify-content: space-between;
-  width: 90%;
+  align-items: center;
+  width: 100%;
   padding-top: 5px;
-  padding-bottom: 5px;
   padding-right: 20px;
 }
 
+#title{
+  font-size: 24px;
+  font-family: 'Borel', cursive;
+  font-weight: bold;
+}
+
 .navButtons{
+  align-items:center;
   display:flex;
-  flex-direction: column;
+  flex-direction: row;
   row-gap: 5px;
-  align-items:flex-end;
 }
 
 .navLoggedOut{
@@ -22,8 +27,9 @@
 }
 
 .navButtons>button{
-  width:auto;
   column-gap: 20px;
+  height: 26px;
+  width:auto;
 }
 
 .navLoggedOut>button:hover{
@@ -31,7 +37,7 @@
 }
 
 .navButtons>a:hover, .homeButton>a:hover{
-border-bottom: solid 1px black;
+  border-bottom: solid 1px black;
   cursor:pointer;
   font-weight: bold;
 }
@@ -42,16 +48,33 @@ border-bottom: solid 1px black;
 
 .profile-dropdown{
   border: solid black 1px;
-  color:green;
   display:flex;
   flex-direction: column;
   margin-top:5px;
   padding: 5px 10px;
+  background-color: gray;
+  position: absolute;
+  top: 64px;
+  color: white;
 }
 
 .homeButton>a{
-  font-size: 24px;
   color:red;
-  text-decoration: none;
   cursor:pointer;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.navLoggedIn{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.navButtons a{
+  margin-right: 5px;
+  align-self: center;
+  color: teal;
+  text-decoration: none;
 }

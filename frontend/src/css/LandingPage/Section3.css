@@ -1,0 +1,44 @@
+.section3Container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sec3Articles{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.lpArticle{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 20%;
+}
+
+.articleImages{
+  max-width: 80%;
+  width: auto;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.sec3Articles a{
+  color: teal;
+  text-decoration: none;
+}
+
+.fa-user-circle{
+  padding-right: 5px;
+}
+
+#gray{
+  color: gray;
+}
+
+.sec3Articles a:hover{
+  cursor:pointer;
+  text-decoration: underline;
+}

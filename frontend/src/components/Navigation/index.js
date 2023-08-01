@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import '../../css/Navigation.css';
+import '../../css/Navigation/Navigation.css';
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from '../SignupFormModal';
@@ -13,8 +13,11 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li className='navButtons navLoggedIn'>
-        <ProfileButton user={sessionUser} />
+      <li className='navButtons'>
+        {sessionUser && <Link>Start a new group</Link>}
+        <div className = 'navLoggedIn'>
+          <ProfileButton user={sessionUser} />
+        </div>
       </li>
     );
   } else {
@@ -35,7 +38,7 @@ function Navigation({ isLoaded }){
   return (
     <ul className='NavBar'>
       <li className='homeButton'>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink id='title' exact to="/">The Meetup</NavLink>
       </li>
       {isLoaded && sessionLinks}
     </ul>

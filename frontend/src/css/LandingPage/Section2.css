@@ -1,0 +1,10 @@
+.section2Container{
+  justify-content: center;
+  text-align: center;
+  width: 30%;
+  align-self: center;
+}
+
+#section2Text{
+  font-size: 16px;
+}
