@@ -1,16 +1,39 @@
 .groupListItemContainer{
-  display:flex;
-  row-gap: 20px;
+  border-top:solid gray;
   column-gap: 20px;
+  display:flex;
+  height: 100%;
+  row-gap: 20px;
+  padding-top: 20px;
 }
 
 .groupInfo{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
+.groupDescription{
+  font-weight: bold;
+  padding-top:10px;
+  padding-bottom: 10px;
+}
+
+.gray{
+  color: gray;
+}
+
+.listItemFooter{
+  column-gap: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.listItemFooter>p{
+  margin-top:0px;
+  margin-bottom:0px;
+}
 .groupInfo>h3, .groupInfo>p{
   margin-top:0;
   margin-bottom:0;

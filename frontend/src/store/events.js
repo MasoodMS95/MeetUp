@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 /** Action Type Constants: */
-export const GET_ALL_EVENTS = 'events/GET_ALL_EVENTS';
+export const GET_ALL_EVENTS = 'events/GET_ALL';
 export const GET_SINGLE_EVENT = 'events/GET_SINGLE_EVENT';
 
 /**  Action Creators: */

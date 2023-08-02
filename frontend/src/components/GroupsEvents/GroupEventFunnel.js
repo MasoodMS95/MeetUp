@@ -11,13 +11,15 @@ function GroupEventFunnel(){
   const history = useHistory();
   const location = useLocation();
   const [currGroupFlag, setCurrGroupFlag] = useState(location.pathname.includes('groups'));
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isGroupLoaded, setIsGroupLoaded] = useState(false);
+  const [isEventLoaded, setIsEventLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(()=>{
     dispatch(getAllGroups())
-    .then(dispatch(getAllEvents()))
-    .then(()=>setIsLoaded(true));
+    .then(()=>setIsGroupLoaded(true));
+    dispatch(getAllEvents())
+    .then(()=>setIsEventLoaded(true));
   }, [dispatch])
 
 
@@ -47,7 +49,7 @@ function GroupEventFunnel(){
 
   return (
     <React.Fragment>
-      {isLoaded && (<div className='allList'>
+      {isGroupLoaded && isEventLoaded && (<div className='allList'>
         <div className='funnelHeaderContainer'>
           <h2 onClick={(e) => handleClick(e, false)} className={eventClassSetter()}>Events</h2>
           <h2 onClick={(e) => handleClick(e, true)} className={groupClassSetter()}>Groups</h2>
