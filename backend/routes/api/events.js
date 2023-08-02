@@ -86,7 +86,7 @@ router.get('/', validateQuery, async (req, res) => {
     limit,
     offset,
     attributes: {
-      exclude: ['createdAt', 'updatedAt', 'capacity', 'price', 'description']
+      exclude: ['createdAt', 'updatedAt', 'capacity', 'price']
     },
     include:[
     {
