@@ -149,6 +149,9 @@ router.get('/', async (req, res) => {
     {
       model: Membership
     },
+    {
+      model: Event
+    }
   ]});
   let groupList = [];
 
@@ -159,6 +162,8 @@ router.get('/', async (req, res) => {
   groupList.forEach(group => {
     group.numMembers = group.Memberships.length;
     delete group.Memberships;
+    group.numEvents = group.Events.length
+    delete group.Events;
     if(group.GroupImages.length){
       group.GroupImages.forEach(image => {
         if(image.preview){
