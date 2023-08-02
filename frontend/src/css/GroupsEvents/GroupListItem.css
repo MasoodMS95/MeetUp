@@ -1,0 +1,21 @@
+.groupListItemContainer{
+  display:flex;
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+.groupInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.groupInfo>h3, .groupInfo>p{
+  margin-top:0;
+  margin-bottom:0;
+}
+img{
+  width: 180px;
+  height: 100px;
+}

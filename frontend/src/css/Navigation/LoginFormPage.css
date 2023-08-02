@@ -24,7 +24,7 @@
 
 .credential, .password{
   margin-bottom: 1rem;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .loginPage input{

@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 /** Action Type Constants: */
 export const GET_ALL_GROUPS = 'groups/GET_ALL';
-export const GET_SINGLE_GROUP = 'session/LOG_OUT_SESSION';
+export const GET_SINGLE_GROUP = 'groups/GET_SINGLE_GROUP';
 
 /**  Action Creators: */
 export const getAllGroupsAction = (groups) => ({

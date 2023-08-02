@@ -1,0 +1,11 @@
+.list{
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.subText{
+  color: gray;
+  margin-top:0;
+  margin-bottom:0;
+}

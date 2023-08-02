@@ -1,0 +1,31 @@
+.allList{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 25%;
+}
+
+.funnelHeaderContainer{
+  display: flex;
+  column-gap: 12px;
+  align-self: flex-start;
+}
+
+.active{
+  color: teal;
+  text-decoration: underline;
+}
+
+.inactive{
+  color:gray;
+}
+
+.inactive:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.list{
+  align-self: flex-start;
+}

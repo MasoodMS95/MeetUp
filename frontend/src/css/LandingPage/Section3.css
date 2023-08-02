@@ -36,6 +36,8 @@
 
 #gray{
   color: gray;
+  margin-bottom:0px;
+  margin-top:0px;
 }
 
 .sec3Articles a:hover{
