@@ -19,17 +19,17 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: '/sample',
+        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
         preview: true
       },
       {
         groupId: 2,
-        url: '/sample',
+        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
         preview: true
       },
       {
         groupId: 3,
-        url: '/sample',
+        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
         preview: true
       },
     ], { validate: true });
