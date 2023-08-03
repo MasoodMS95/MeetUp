@@ -59,8 +59,8 @@ module.exports = {
         type: "In person",
         capacity: 3,
         price: 3,
-        startDate: "2023-03-03",
-        endDate: "2024-03-03"
+        startDate: "2024-03-03",
+        endDate: "2025-03-03"
       },
     ], { validate: true });
   },

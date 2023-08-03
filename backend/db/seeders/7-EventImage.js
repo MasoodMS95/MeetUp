@@ -35,6 +35,11 @@ module.exports = {
         url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
         preview: true
       },
+      {
+        eventId: 4,
+        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
+        preview: true
+      },
     ], { validate: true });
   },
 

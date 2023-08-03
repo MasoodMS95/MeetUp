@@ -2,9 +2,15 @@
 body{
   box-sizing: border-box;
   background-color: rgba(216, 216, 216, 0.523);
-  max-width: 90%;
+  max-width: 93%;
   width: auto;
   align-self: center;
+}
+
+@media screen and (max-width:1017px){
+  body{
+    max-width: 84%;
+  }
 }
 
 p.errors{
