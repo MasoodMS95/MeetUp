@@ -22,18 +22,18 @@ module.exports = {
     await EventImage.bulkCreate([
       {
         eventId: 1,
-        url: '/sample',
+        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
         preview: true
       },
       {
         eventId: 2,
-        url: '/sample',
-        preview: false
+        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
+        preview: true
       },
       {
         eventId: 3,
-        url: '/sample',
-        preview: false
+        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
+        preview: true
       },
     ], { validate: true });
   },

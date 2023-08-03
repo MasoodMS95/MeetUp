@@ -190,9 +190,26 @@ router.get('/:eventId', async (req, res) => {
     where: {
       id: parsed.groupId
     },
-    attributes: ['id', 'name', 'private', 'city', 'state']
+    attributes: ['id', 'name', 'private', 'city', 'state', 'organizerId']
   })
   parsed.Group = group.toJSON();
+
+  //Find creator
+  let organizer = await User.findOne({
+    where: {
+      id: group.organizerId
+    },
+    attributes: ['firstName', 'lastName']
+  })
+  parsed.Organizer=organizer.toJSON();
+
+  //Find GroupImages
+  let groupImages = await GroupImage.findAll({
+    where: {
+      groupId: group.id
+    }
+  });
+  parsed.GroupImages = groupImages;
 
   //Set numAttending
   parsed.numAttending = await Attendance.count({

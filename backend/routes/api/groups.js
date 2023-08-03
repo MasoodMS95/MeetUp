@@ -246,6 +246,9 @@ router.get('/:groupId', async (req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt']
       }
+    },
+    {
+      model: Event
     }
   ]});
 
@@ -267,6 +270,7 @@ router.get('/:groupId', async (req, res) => {
 
   parsed.numMembers = parsed.Memberships.length;
   delete parsed.Memberships
+  parsed.numEvents = parsed.Events.length;
 
   parsed.Organizer = organizer;
   res.json(parsed);
