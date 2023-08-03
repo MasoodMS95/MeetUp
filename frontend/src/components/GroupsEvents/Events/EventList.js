@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
-import '../../../css/GroupsEvents/GroupList.css'
+
+import '../../../css/GroupsEvents/GroupEventLists.css'
+import EventListItem from './EventListItem';
 
 function EventList(){
   const events = useSelector(state => state.events.allEvents)
@@ -9,7 +11,7 @@ function EventList(){
     <p className='subText'>Events in Meetup</p>
     {Object.values(events).map((event) => (
       <div key={event.id}>
-        <p>{event.id}</p>
+        <EventListItem event={event}/>
       </div>
     ))}
   </div>

@@ -1,9 +1,15 @@
+
 .allList{
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 25%;
+  margin-left: 45%;
+}
+@media screen and (max-width:1370px) {
+  .allList{
+    margin-left: 25%;
+  }
 }
 
 .funnelHeaderContainer{

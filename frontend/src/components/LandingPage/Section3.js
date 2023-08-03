@@ -7,7 +7,6 @@ import jgImg from '../../images/joinAGroup.png'
 import sgImg from '../../images/startAGroup.png'
 import eImg from '../../images/events.png'
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 function Section3(){
   const user = useSelector((state) => state.session.user);
   const swapClickable = () =>{

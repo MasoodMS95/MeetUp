@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import '../../../css/GroupsEvents/GroupList.css'
+import '../../../css/GroupsEvents/GroupEventLists.css'
 import GroupListItem from './GroupListItem';
 
 function GroupList(){

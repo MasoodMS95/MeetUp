@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
-import GroupList from "./Group/GroupList";
+import GroupList from "./Groups/GroupList";
 import EventList from "./Events/EventList";
 import '../../css/GroupsEvents/GroupEventFunnel.css'
 import { getAllGroups } from "../../store/groups";

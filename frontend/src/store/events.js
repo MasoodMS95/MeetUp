@@ -27,7 +27,7 @@ export const getAllEvents = () => async (dispatch) =>{
 }
 
 export const getSingleEvent = (eventId) => async (dispatch) =>{
-  const res = await csrfFetch(`api/events/${eventId}`);
+  const res = await csrfFetch(`/api/events/${eventId}`);
   if(res.ok){
     let event = await res.json();
     dispatch(getSingleEventAction(event));

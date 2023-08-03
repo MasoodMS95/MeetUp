@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 /** Action Type Constants: */
 export const GET_ALL_GROUPS = 'groups/GET_ALL';
-export const GET_SINGLE_GROUP = 'groups/GET_SINGLE_GROUP';
+export const GET_SINGLE_GROUP = 'groups/';
 
 /**  Action Creators: */
 export const getAllGroupsAction = (groups) => ({
@@ -27,7 +27,7 @@ export const getAllGroups = () => async (dispatch) =>{
 }
 
 export const getSingleGroup = (groupId) => async (dispatch) =>{
-  const res = await csrfFetch(`api/groups/${groupId}`);
+  const res = await csrfFetch(`/api/groups/${groupId}`);
   if(res.ok){
     let group = await res.json();
     dispatch(getSingleGroupAction(group));

@@ -1,0 +1,47 @@
+.groupDetailsContainer{
+  margin-left:20%;
+}
+
+@media screen and (min-width: 1696px){
+  .groupDetailsContainer{
+    margin-left:35%;
+  }
+}
+
+.groupDetailsContainer>a{
+  color:blue;
+}
+
+.groupDetailsHeader{
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+}
+
+.groupDetailsHeaderPillar{
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.groupDetailsHeaderPillar p{
+  margin-top:1px;
+}
+
+.lesser{
+  color:gray;
+  font-size:13px;
+}
+
+#joinGroupBtn{
+  background-color: red;
+  color:white;
+  margin-top:35px;
+  height:40px;
+
+}
+
+#groupImage{
+  height: 200px;
+  width: 350px;
+}

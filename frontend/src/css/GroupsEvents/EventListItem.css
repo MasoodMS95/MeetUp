@@ -1,0 +1,53 @@
+.eventListItemHeaderContainer{
+  border-top:solid gray;
+  column-gap: 20px;
+  display:flex;
+  height: 100%;
+  row-gap: 20px;
+  padding-top: 20px;
+}
+
+.EventInfo{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.eventLocation{
+  padding-top:5px;
+}
+
+.eventName{
+  font-weight: bold;
+  padding-top:10px;
+}
+
+.gray{
+  color: gray;
+}
+
+.listItemFooter{
+  column-gap: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.listItemFooter>p{
+  margin-top:0px;
+  margin-bottom:0px;
+}
+
+.EventInfo>h3, .EventInfo>p{
+  margin-top:0;
+  margin-bottom:0;
+}
+
+.EventInfo>h3{
+  color: teal;
+}
+
+img{
+  width: 180px;
+  height: 100px;
+}
