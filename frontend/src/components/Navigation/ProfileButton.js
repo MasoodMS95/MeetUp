@@ -1,5 +1,6 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
@@ -7,6 +8,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const history = useHistory();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -17,12 +19,12 @@ function ProfileButton({ user }) {
   const setChevron = () => {
     if(showMenu){
       return (
-        <i class="fa-solid fa-chevron-down" />
+        <i className="fa-solid fa-chevron-down" />
       )
     }
     else{
       return (
-        <i class="fa-solid fa-chevron-up" />
+        <i className="fa-solid fa-chevron-up" />
       )
     }
   }
@@ -45,6 +47,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -56,9 +59,13 @@ function ProfileButton({ user }) {
         {setChevron()}
       </button>
       {showMenu && <ul className={ulClassName} ref={ulRef}>
-        <li>Username: {user.username}</li>
-        <li>Name: {user.firstName} {user.lastName}</li>
-        <li>Email: {user.email}</li>
+        <li>Hello, {user.firstName}</li>
+        <li className='modalLine'>{user.email}</li>
+        <li className='modalLine'>
+          <button onClick={()=>{
+            history.push('/groups')
+          }}>View groups</button>
+        </li>
         <li>
           <button onClick={logout}>Log Out</button>
         </li>

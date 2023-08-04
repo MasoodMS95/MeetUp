@@ -7,17 +7,23 @@
   padding-top: 20px;
 }
 
+.groupListItemContainer:hover{
+  cursor: pointer;
+}
+
 .groupInfo{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 70%;
 }
 
 .groupDescription{
   font-weight: bold;
-  padding-top:10px;
+  padding-top: 10px;
   padding-bottom: 10px;
+  word-break: break-word;
 }
 
 .gray{

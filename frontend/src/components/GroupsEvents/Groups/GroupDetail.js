@@ -13,16 +13,16 @@ function GroupDetail(){
   const dispatch = useDispatch();
   const groupDetails = useSelector(state=>state.groups.singleGroup);
   const events = useSelector(state=>state.events.allEvents)
+  const user = useSelector(state=>state.session.user)
   let imgURL= ""
-  if(groupDetails.GroupImages){
+  if(groupDetails.GroupImages && groupDetails.GroupImages.length > 0){
     imgURL = groupDetails.GroupImages.filter(image => image.preview===true)[0].url;
   }
 
   let pastEvents=[];
   let futureEvents=[];
-  if(groupDetails.Events && isEventsLoaded){
+  if(groupDetails && groupDetails.Events && isEventsLoaded){
     const today = new Date();
-    console.log('Inner Events', events);
     groupDetails.Events.forEach(event => {
       let fullEvent = events[event.id];
       console.log('Full Event', fullEvent);
@@ -36,12 +36,27 @@ function GroupDetail(){
     });
   }
 
+  const sortByStartDate = (a, b) => {
+    const left = new Date(a.startDate);
+    const right = new Date(b.startDate);
+    if (left < right) {
+      return -1;
+    } else if (left > right) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
+  futureEvents.sort(sortByStartDate);
+
   useEffect(()=>{
-    dispatch(getSingleGroup(groupId))
-    .then(setIsGrouploaded(true));
-    dispatch(getAllEvents())
-    .then(setIsEventsloaded(true));
-  }, [dispatch])
+    const fetchAll = async () => {
+      await Promise.all([dispatch(getSingleGroup(groupId)), dispatch(getAllEvents())])
+      setIsGrouploaded(true)
+      setIsEventsloaded(true)
+    }
+    fetchAll();
+  }, [dispatch, groupId, user])
 
   return (
     <React.Fragment>
@@ -53,9 +68,16 @@ function GroupDetail(){
           <div className='groupDetailsHeaderPillar'>
             <p>{groupDetails.name}</p>
             <p className="lesser">{`${groupDetails.city}, ${groupDetails.state}`}</p>
-            <p className="lesser">{`${groupDetails.numEvents} Event(s) *   ${groupDetails.private ? 'Private' : 'Public'}`}</p>
+            <p className="lesser">{`${groupDetails.numEvents} Event(s) · ${groupDetails.private ? 'Private' : 'Public'}`}</p>
             <p className="lesser">{`Organized by ${groupDetails.Organizer ? groupDetails.Organizer.firstName : 'John'} ${groupDetails.Organizer ? groupDetails.Organizer.lastName : 'Doe'}`}</p>
-            <button id='joinGroupBtn'> Join this group </button>
+            {user && user.id !== groupDetails.organizerId && (<button onClick={() => window.alert('Feature coming soon')} id='joinGroupBtn'> Join this group </button>)}
+            {user && user.id === groupDetails.organizerId && (
+              <div id='loggedInButtonsForGroup'>
+                <button>Create event</button>
+                <button>Update</button>
+                <button>Delete</button>
+              </div>
+            )}
           </div>
         </div>
         <div className='groupAboutMe'>
@@ -67,7 +89,7 @@ function GroupDetail(){
             futureEvents.length>0 && (
               <React.Fragment>
                 <h2>{`Upcoming Events (${futureEvents.length})`}</h2>
-                {futureEvents.map(event =>(
+                {futureEvents.map(event => event && (
                   <div key={event.id}>
                     <EventListItem event={event}/>
                   </div>
@@ -76,10 +98,10 @@ function GroupDetail(){
             )
           }
           {
-            pastEvents.length>0 && (
+            pastEvents.length > 0 && (
               <React.Fragment>
                 <h2>{`Past Events (${pastEvents.length})`}</h2>
-                {pastEvents.map(event =>(
+                {pastEvents.map(event => event && (
                   <div key={event.id}>
                     <EventListItem event={event}/>
                   </div>

@@ -38,7 +38,22 @@
   color:white;
   margin-top:35px;
   height:40px;
+}
 
+#loggedInButtonsForGroup{
+  column-gap: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-self: flex-end;
+  margin-top: 54px;
+}
+
+#loggedInButtonsForGroup>button{
+  background-color: darkgray;
+  color: white;
+  font-size: 10px;
+  height: 23px;
+  width: 74px;
 }
 
 #groupImage{

@@ -47,15 +47,26 @@
 }
 
 .profile-dropdown{
+  align-items: flex-start;
+  background-color: white;
   border: solid black 1px;
+  color: black;
   display:flex;
   flex-direction: column;
   margin-top:5px;
   padding: 5px 10px;
-  background-color: gray;
   position: absolute;
   top: 64px;
-  color: white;
+}
+
+.modalLine{
+  border-bottom: solid black 2px;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+
+.profile-dropdown button{
+  width: 90px;
 }
 
 .homeButton>a{

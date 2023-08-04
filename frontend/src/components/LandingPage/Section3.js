@@ -12,7 +12,7 @@ function Section3(){
   const swapClickable = () =>{
     if(user){
       return (
-        <Link to='/groups'>Start a new group</Link>
+        <Link to='/groups/new'>Start a new group</Link>
       )
     }
     else{
@@ -24,7 +24,7 @@ function Section3(){
       <div className="sec3Articles">
         <div className='lpArticle article1'>
           <img className='articleImages jgImg' src={sgImg}/>
-          <Link to='/groups'>Join a Group</Link>
+          <Link to='/groups'>See all groups</Link>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
         <div className='lpArticle article2'>
@@ -41,7 +41,7 @@ function Section3(){
       {!user &&
         <label className='footerSignUp'>
           <OpenModalButton
-          buttonText="Signup"
+          buttonText="Join Meetup"
           modalComponent={<SignupFormModal />}
         />
         </label>}

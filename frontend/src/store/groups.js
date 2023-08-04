@@ -35,6 +35,30 @@ export const getSingleGroup = (groupId) => async (dispatch) =>{
   }
 }
 
+export const createGroup = (newGroup) => async (dispatch) => {
+  const {name, about, type, privacy, city, state, imgURL} = newGroup;
+  const body = {name, about, type, private:privacy, city, state};
+  let res;
+  try{
+      res = await csrfFetch('/api/groups', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+  }
+  catch(err){
+    const error = await err.json();
+    return error
+  }
+
+  const parsedRes = await res.json();
+  const gImgRes = await csrfFetch(`/api/groups/${parsedRes.id}/images`, {
+    method: 'POST',
+    body: JSON.stringify({url: imgURL, preview:true})
+  })
+  await dispatch(getAllGroups())
+  return parsedRes;
+}
+
 //Reducer
 const groupReducer = (state = {allGroups: {}, singleGroup:{}}, action) => {
   switch (action.type) {

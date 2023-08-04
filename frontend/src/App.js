@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage'
 import GroupEventFunnel from "./components/GroupsEvents/GroupEventFunnel";
 import GroupDetail from "./components/GroupsEvents/Groups/GroupDetail";
 import EventDetail from "./components/GroupsEvents/Events/EventDetail";
+import GroupForm from "./components/GroupsEvents/Groups/GroupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,10 +24,13 @@ function App() {
           <Route exact path='/'>
             <LandingPage/>
           </Route>
+          <Route exact path='/groups/new'>
+            <GroupForm action={'create'}/>
+          </Route>
           <Route path='/groups/:groupId'>
             <GroupDetail />
           </Route>
-          <Route path='/groups'>
+          <Route exact path='/groups'>
             <GroupEventFunnel/>
           </Route>
           <Route path='/events/:eventId'>

@@ -62,9 +62,13 @@ function EventDetail(){
   }
 
   useEffect(()=>{
-    dispatch(getSingleEvent(eventId))
-    .then(setIsloaded(true))
-  }, [dispatch])
+    const fetchData = async () => {
+      await dispatch(getSingleEvent(eventId))
+      setIsloaded(true)
+    }
+
+    fetchData();
+  }, [dispatch, eventId])
 
   console.log(eventDetails);
   return (
@@ -93,11 +97,11 @@ function EventDetail(){
                     <div className='timeInfoContainer'>
                       <div id='eventInfoText'>
                         <p id='gray'>Start </p>
-                        <p>{`${parsedStartDate[0]} *  <${parsedStartDate.length>0? parsedStartDate[1].slice(0,5) : 'TBD'}>`}</p>
+                        <p>{`${parsedStartDate[0]} · <${parsedStartDate.length>0? parsedStartDate[1].slice(0,5) : 'TBD'}>`}</p>
                       </div>
                       <div id='eventInfoText'>
                         <p id='gray'>End&nbsp;</p>
-                        <p>{`${parsedEndDate[0]} *  <${parsedEndDate.length>0?  parsedEndDate[1].slice(0,5) : 'TBD'}>`}</p>
+                        <p>{`${parsedEndDate[0]} · <${parsedEndDate.length>0?  parsedEndDate[1].slice(0,5) : 'TBD'}>`}</p>
                       </div>
                     </div>
                   </div>

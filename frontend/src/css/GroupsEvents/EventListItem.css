@@ -3,8 +3,14 @@
   column-gap: 20px;
   display:flex;
   height: 100%;
+  max-width: 450px;
   row-gap: 20px;
   padding-top: 20px;
+  width: auto;
+}
+
+.eventListItemContainer:hover{
+  cursor: pointer;
 }
 
 .EventInfo{
