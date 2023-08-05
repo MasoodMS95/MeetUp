@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { getSingleGroup } from "../../../store/groups";
 import {getAllEvents} from '../../../store/events'
 import EventListItem from '../Events/EventListItem';
@@ -14,6 +14,7 @@ function GroupDetail(){
   const groupDetails = useSelector(state=>state.groups.singleGroup);
   const events = useSelector(state=>state.events.allEvents)
   const user = useSelector(state=>state.session.user)
+  const history = useHistory();
   let imgURL= ""
   if(groupDetails.GroupImages && groupDetails.GroupImages.length > 0){
     imgURL = groupDetails.GroupImages.filter(image => image.preview===true)[0].url;
@@ -39,13 +40,7 @@ function GroupDetail(){
   const sortByStartDate = (a, b) => {
     const left = new Date(a.startDate);
     const right = new Date(b.startDate);
-    if (left < right) {
-      return -1;
-    } else if (left > right) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return left-right;
   };
   futureEvents.sort(sortByStartDate);
 
@@ -74,7 +69,7 @@ function GroupDetail(){
             {user && user.id === groupDetails.organizerId && (
               <div id='loggedInButtonsForGroup'>
                 <button>Create event</button>
-                <button>Update</button>
+                <button onClick={()=>history.push(`/groups/${groupDetails.id}/edit`)}>Update</button>
                 <button>Delete</button>
               </div>
             )}

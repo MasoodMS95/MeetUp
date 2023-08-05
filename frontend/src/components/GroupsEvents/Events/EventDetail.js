@@ -117,7 +117,7 @@ function EventDetail(){
               </div>
             </div>
             <div className='eventDetailsFooter'>
-              <h2>Details</h2>
+              <h2>Description</h2>
               <p>{eventDetails.description}</p>
             </div>
           </div>

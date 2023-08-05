@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createGroup } from "../../../store/groups";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom";
+import { getSingleGroup } from "../../../store/groups";
+import { updateGroup } from "../../../store/groups";
 
 function GroupForm({action}){
   const [name, setName] = useState('');
@@ -12,9 +14,40 @@ function GroupForm({action}){
   const [state, setState] = useState('');
   const [imgURL, setImgURL] = useState('');
   const [errors, setErrors] = useState({})
+  const [isloaded, setIsLoaded] = useState(false);
+  const groupDetails = useSelector(state=>state.groups.singleGroup)
+  const user = useSelector(state=>state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  let {id} = useParams();
 
+  const isUpdate = action === 'update';
+
+  useEffect(()=>{
+    const fetchAndSet = async () =>{
+      if(isUpdate && id){
+        await dispatch(getSingleGroup(id));
+        console.log(groupDetails);
+        setName(groupDetails.name);
+        setCity(groupDetails.city);
+        setState(groupDetails.state);
+        setAbout(groupDetails.about);
+        setPrivacy(groupDetails.private)
+        console.log('PRIVACY', privacy);
+        setType(groupDetails.type);
+        setIsLoaded(true);
+      }
+    }
+    fetchAndSet();
+  },[dispatch, isloaded])
+
+  useEffect(()=>{
+    if(Object.values(groupDetails).length > 1){
+      if(!user || user.id !== groupDetails.organizerId){
+        history.push('/');
+      }
+    }
+  }, [groupDetails])
 
   const submitHandler = async (e) =>{
     e.preventDefault();
@@ -30,37 +63,41 @@ function GroupForm({action}){
     if(about.length < 50){
       errs.about = true;
     }
-    if(!privacy){
+    if(privacy===''){
       errs.privacy = true;
     }
-    if(!type){
+    if(type===''){
       errs.type = true;
     }
     let parsedURL = imgURL.split('.');
-    if(!imgURL || !endings.includes(parsedURL[parsedURL.length-1])){
-      errs.imgURL = true
+    if(action!=='update' && (!imgURL || !endings.includes(parsedURL[parsedURL.length-1]))){
+      errs.imgURL = true;
     }
     setErrors(errs);
-    console.log(Object.values(errs));
 
-
+    console.log('CURRENT ERRORS', errs);
     if(!Object.values(errs).length){
-      const res = await dispatch(createGroup({name, about, type, privacy, city, state}))
-      console.log(res);
-      history.push(`/groups/${res.id}`)
+      let res;
+      if(isUpdate){
+        res = await dispatch(updateGroup({name, about, type, privacy, city, state}, groupDetails.id))
+      }
+      else{
+        res = await dispatch(createGroup({name, about, type, privacy, city, state, imgURL}));
+      }
+      history.push(`/groups/${res.id}`);
     }
   }
   return (
     <React.Fragment>
       <form className='groupFormContainer' onSubmit={submitHandler}>
         <div className='groupFormSection'>
-          <h3>BECOME AN ORGANIZER</h3>
+          <h3>{isUpdate? 'Update your group' : 'Start a New Group'}</h3>
           <h2>We'll walk you through a few steps to build your local community</h2>
         </div>
 
         <div className='groupFormSection'>
-          <h2>First, set your group's location</h2>
-          <p className='subtext'>Meetup groups meet locally, in person and online. We'll connect you with people in your area, and more can join you online</p>
+          <h2>Set your group's location</h2>
+          <p className='subtext'>The Meetup groups meet locally, in person, and online. We'll connect you with people in your area.</p>
           <input
             value={city}
             placeholder="City"
@@ -86,7 +123,7 @@ function GroupForm({action}){
         </div>
 
         <div className='groupFormSection'>
-          <h2>Now describe what your group will be about</h2>
+          <h2>Describe the purpose of your group.</h2>
           <p className='subtext'>People will see this when we promote your group, but you'll be able to add it later, too.</p>
 
           <span>
@@ -107,6 +144,7 @@ function GroupForm({action}){
           <p>Is this an in person or online group?</p>
           <select
             onChange={(e)=>setType(e.target.value)}
+            value={type}
           >
             <option value="">(select one)</option>
             <option>In person</option>
@@ -124,7 +162,7 @@ function GroupForm({action}){
           </select>
           {errors.privacy && (<p className="errors">Visibility Type Required</p>)}
         </div>
-
+        {!isUpdate && (
         <div className='groupFormSection'>
           <p className='subtext'>Please add in image url for your group below:</p>
           <input
@@ -133,8 +171,9 @@ function GroupForm({action}){
           ></input>
           {errors.imgURL && (<p className="errors">Image URL must end in .png, .jpg, or .jpeg</p>)}
         </div>
+        )}
 
-        <button>Create Group</button>
+        <button>{isUpdate ? 'Update Group':'Create Group'}</button>
       </form>
     </React.Fragment>
   )

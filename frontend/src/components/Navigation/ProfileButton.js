@@ -65,6 +65,9 @@ function ProfileButton({ user }) {
           <button onClick={()=>{
             history.push('/groups')
           }}>View groups</button>
+          <button onClick={()=>{
+            history.push('/events')
+          }}>View events</button>
         </li>
         <li>
           <button onClick={logout}>Log Out</button>

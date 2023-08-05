@@ -27,6 +27,9 @@ function App() {
           <Route exact path='/groups/new'>
             <GroupForm action={'create'}/>
           </Route>
+          <Route path='/groups/:id/edit'>
+            <GroupForm action={'update'}/>
+          </Route>
           <Route path='/groups/:groupId'>
             <GroupDetail />
           </Route>

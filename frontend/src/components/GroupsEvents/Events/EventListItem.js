@@ -18,8 +18,7 @@ function EventListItem({event}){
   if(event.startDate){
     parsedDate = event.startDate.split(" ");
   }
-  console.log(parsedDate);
-  console.log(event);
+
   return(
     <div onClick={(e)=>handeClick(e)} className='eventListItemContainer'>
       <div className='eventListItemHeaderContainer'>

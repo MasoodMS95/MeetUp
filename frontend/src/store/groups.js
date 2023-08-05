@@ -59,6 +59,25 @@ export const createGroup = (newGroup) => async (dispatch) => {
   return parsedRes;
 }
 
+export const updateGroup = (updatedGroup, id) => async (dispatch) => {
+  const {name, about, type, privacy, city, state} = updatedGroup;
+  console.log(typeof privacy)
+  const body = {name, about, type, private:privacy, city, state};
+  console.log(body);
+  let res;
+  try{
+      res = await csrfFetch(`/api/groups/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  }
+  catch(err){
+    const error = await err.json();
+    return error
+  }
+  return await res.json();
+}
+
 //Reducer
 const groupReducer = (state = {allGroups: {}, singleGroup:{}}, action) => {
   switch (action.type) {

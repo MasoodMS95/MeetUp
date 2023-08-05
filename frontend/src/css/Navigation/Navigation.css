@@ -61,6 +61,8 @@
 
 .modalLine{
   border-bottom: solid black 2px;
+  display:flex;
+  flex-direction: column;
   padding-bottom: 4px;
   margin-bottom: 4px;
 }

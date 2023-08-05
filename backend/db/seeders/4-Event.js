@@ -26,7 +26,7 @@ module.exports = {
         type: "Online",
         capacity: 1,
         price: 1,
-        startDate: "2022-01-01",
+        startDate: "2025-01-01",
         endDate: "2022-01-02"
       },
       {

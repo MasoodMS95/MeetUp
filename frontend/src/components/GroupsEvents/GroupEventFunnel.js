@@ -22,6 +22,10 @@ function GroupEventFunnel(){
     .then(()=>setIsEventLoaded(true));
   }, [dispatch])
 
+  useEffect(()=>{
+    setCurrGroupFlag(location.pathname.includes('groups'));
+  },[location.pathname])
+
 
   const groupClassSetter = () => {
     if(currGroupFlag){
