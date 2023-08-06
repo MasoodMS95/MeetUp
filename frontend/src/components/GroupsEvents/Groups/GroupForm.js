@@ -20,38 +20,52 @@ function GroupForm({action}){
   const dispatch = useDispatch();
   const history = useHistory();
   let {id} = useParams();
-
   const isUpdate = action === 'update';
 
   useEffect(()=>{
     const fetchAndSet = async () =>{
       if(isUpdate && id){
-        await dispatch(getSingleGroup(id));
-        console.log(groupDetails);
-        setName(groupDetails.name);
-        setCity(groupDetails.city);
-        setState(groupDetails.state);
-        setAbout(groupDetails.about);
-        setPrivacy(groupDetails.private)
-        console.log('PRIVACY', privacy);
-        setType(groupDetails.type);
+        await dispatch(getSingleGroup(id))
+        .then((res)=>{
+          setName(res.name);
+          setCity(res.city);
+          setState(res.state);
+          setAbout(res.about);
+          setPrivacy(res.private)
+          setType(res.type);
+          setIsLoaded(true);
+          }
+        )
+      }
+      else{
+        setName('');
+        setCity('');
+        setState('');
+        setAbout('');
+        setPrivacy('')
+        setType('');
         setIsLoaded(true);
       }
     }
     fetchAndSet();
-  },[dispatch, isloaded])
+  },[dispatch, action, isloaded])
+
+  useEffect(()=>{
+    if(!user){
+      history.push('/NoUserLoggedIn');
+    }
+  }, [user])
 
   useEffect(()=>{
     if(Object.values(groupDetails).length > 1){
-      if(!user || user.id !== groupDetails.organizerId){
+      if(isUpdate && (user.id !== groupDetails.organizerId)){
+        window.alert('Unauthorized Access.')
         history.push('/');
       }
     }
   }, [groupDetails])
 
-  const submitHandler = async (e) =>{
-    e.preventDefault();
-
+  const errorHandler = () => {
     const endings = ['jpg', 'jpeg', 'png'];
     const errs = {};
     if(!name){
@@ -70,12 +84,17 @@ function GroupForm({action}){
       errs.type = true;
     }
     let parsedURL = imgURL.split('.');
-    if(action!=='update' && (!imgURL || !endings.includes(parsedURL[parsedURL.length-1]))){
+    if(!isUpdate && (!imgURL || !endings.includes(parsedURL[parsedURL.length-1]))){
       errs.imgURL = true;
     }
     setErrors(errs);
+    return errs;
+  }
 
-    console.log('CURRENT ERRORS', errs);
+  const submitHandler = async (e) =>{
+    e.preventDefault();
+    const errs = errorHandler();
+
     if(!Object.values(errs).length){
       let res;
       if(isUpdate){
@@ -92,7 +111,7 @@ function GroupForm({action}){
       <form className='groupFormContainer' onSubmit={submitHandler}>
         <div className='groupFormSection'>
           <h3>{isUpdate? 'Update your group' : 'Start a New Group'}</h3>
-          <h2>We'll walk you through a few steps to build your local community</h2>
+          <h2>{isUpdate? 'We\'ll walk you through a few steps to update your group.' : 'We\'ll walk you through a few steps to build your local community'}</h2>
         </div>
 
         <div className='groupFormSection'>

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { getSingleEvent } from "../../../store/events";
+import DeleteEventModal from "./DeleteEventModal";
+import OpenModalButton from "../../OpenModalButton";
 import clockImg from '../../../images/simpleclock.png'
 import priceImg from '../../../images/price.png'
 import locationImg from '../../../images/location.png'
@@ -13,9 +15,10 @@ function EventDetail(){
   const dispatch = useDispatch();
   const history = useHistory();
   const eventDetails = useSelector(state=>state.events.singleEvent);
+  const user = useSelector(state=>state.session.user)
 
   let imgURL = "";
-  if(eventDetails.EventImages){
+  if(eventDetails.EventImages?.length>0){
     imgURL = eventDetails.EventImages.filter(event => event.preview===true)[0].url;
   }
 
@@ -56,21 +59,25 @@ function EventDetail(){
 
   let price="FREE"
   if(eventDetails.price){
-    if(eventDetails.price > 1){
-      price = eventDetails.price
+    if(Number(eventDetails.price) > 0){
+      price = Number(eventDetails.price)
     }
   }
 
   useEffect(()=>{
     const fetchData = async () => {
-      await dispatch(getSingleEvent(eventId))
-      setIsloaded(true)
+      try{
+        await dispatch(getSingleEvent(eventId))
+        setIsloaded(true)
+      }
+      catch(err){
+        history.push('/404');
+      }
     }
 
     fetchData();
-  }, [dispatch, eventId])
+  }, [dispatch, eventId]);
 
-  console.log(eventDetails);
   return (
     <React.Fragment>
       {isLoaded && (
@@ -107,11 +114,20 @@ function EventDetail(){
                   </div>
                   <div className='price'>
                     <img src={priceImg}/>
-                    <p id='gray'>{price !== 'FREE'? `$${price}.00` : price}</p>
+                    <p id='gray'>{price !== 'FREE'? `$${price}` : price}</p>
                   </div>
                   <div className='location'>
                     <img src={locationImg}/>
-                    <p id='gray'>{eventDetails.type}</p>
+                    <p id='gray' className='fbLocation'>{eventDetails.type}</p>
+                    {user && user.id === eventDetails.Organizer?.id && (
+                      <div className='fbLocation' id='loggedInButtonsForEvent'>
+                        <button onClick={()=>window.alert('Featuring coming soon.')}>Update</button>
+                        <OpenModalButton
+                          buttonText="Delete"
+                          modalComponent={<DeleteEventModal eventId={eventId}/>}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

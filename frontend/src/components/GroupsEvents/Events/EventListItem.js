@@ -10,9 +10,9 @@ function EventListItem({event}){
 
   let city = "";
   let state = "";
-  if(event.Venue){
-    city = event.Venue.city;
-    state = event.Venue.state;
+  if(event.Group){
+    city = event.Group.city;
+    state = event.Group.state;
   }
   let parsedDate = [];
   if(event.startDate){

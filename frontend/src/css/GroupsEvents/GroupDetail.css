@@ -51,6 +51,7 @@
 #loggedInButtonsForGroup>button{
   background-color: darkgray;
   color: white;
+  cursor: pointer;
   font-size: 10px;
   height: 23px;
   width: 74px;
@@ -59,4 +60,8 @@
 #groupImage{
   height: 200px;
   width: 350px;
+}
+
+#groupDetailsAboutMeText {
+  word-break: break-word;
 }

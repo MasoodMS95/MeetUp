@@ -16,10 +16,13 @@ function GroupEventFunnel(){
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(getAllGroups())
-    .then(()=>setIsGroupLoaded(true));
-    dispatch(getAllEvents())
-    .then(()=>setIsEventLoaded(true));
+    const fetchAll = async () =>{
+      await dispatch(getAllGroups())
+      await dispatch(getAllEvents())
+      setIsGroupLoaded(true);
+      setIsEventLoaded(true);
+    }
+    fetchAll();
   }, [dispatch])
 
   useEffect(()=>{

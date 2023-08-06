@@ -1,10 +1,23 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../../css/GroupsEvents/GroupEventLists.css'
 import EventListItem from './EventListItem';
+import { useEffect, useState } from 'react';
+import { getAllEvents } from '../../../store/events';
 
 function EventList(){
   const events = useSelector(state => state.events.allEvents)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    const fetch = async () => {
+      await dispatch(getAllEvents());
+      setIsLoaded(true);
+    }
+    fetch();
+  }, [dispatch])
+
   let sortedEvents = Object.values(events);
   const sortByStartDate = (a, b) => {
     const left = new Date(a.startDate);

@@ -54,15 +54,18 @@ const validateVenue = [
 const validateEvent = [
   check('venueId')
     .custom(async (venueId, { req }) => {
-      const venue = await Venue.findOne({
-        where: {
-          id: venueId
+      if(venueId){
+        const venue = await Venue.findOne({
+          where: {
+            id: venueId
+          }
+        });
+        if(venue){
+          return true;
         }
-      });
-      if(venue){
-        return true;
+        throw new Error('Venue does not exist');
       }
-      throw new Error('Venue does not exist');
+      return true;
     }),
   check('name')
     .exists({ checkFalsy: true })

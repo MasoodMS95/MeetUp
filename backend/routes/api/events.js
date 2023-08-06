@@ -199,7 +199,7 @@ router.get('/:eventId', async (req, res) => {
     where: {
       id: group.organizerId
     },
-    attributes: ['firstName', 'lastName']
+    attributes: ['firstName', 'lastName', 'id']
   })
   parsed.Organizer=organizer.toJSON();
 

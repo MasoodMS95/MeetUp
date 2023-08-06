@@ -35,6 +35,44 @@ export const getSingleEvent = (eventId) => async (dispatch) =>{
   }
 }
 
+export const createEvent = (eventInfo, imgUrl, groupId) => async (dispatch) =>{
+  let res;
+  console.log('BODY VALUES', eventInfo, imgUrl, groupId);
+  try{
+    res = await csrfFetch(`/api/groups/${groupId}/events`, {
+      method: 'POST',
+      body: JSON.stringify({...eventInfo, capacity:10})
+    });
+  }
+  catch(err){
+    const error = await err.json()
+    return error;
+  }
+  //TO-DO: Make sure front end handles issues
+  const parsedRes = await res.json();
+  console.log('PARSEDRES', parsedRes);
+  const eImgRes = await csrfFetch(`/api/events/${parsedRes.id}/images`,{
+    method: 'POST',
+    body: JSON.stringify({url: imgUrl, preview:true})
+  })
+  return parsedRes;
+}
+
+export const deleteEvent = (eventId) => async(dispatch) => {
+  let res;
+  try{
+    res = await csrfFetch(`/api/events/${eventId}`, {
+      method: 'DELETE'
+    })
+  }
+  catch(err){
+    const error = await err.json();
+    return error;
+  }
+  await dispatch(getAllEvents());
+  return res.json();
+}
+
 //Reducer
 const eventReducer = (state = {allEvents: {}, singleEvent:{}}, action) => {
   switch (action.type) {

@@ -79,8 +79,8 @@
   border: solid black 1px;
   display: flex;
   flex-basis: 100%;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   padding-left:20px;
   row-gap: 30px;
   width: 100%;
@@ -96,11 +96,32 @@
 }
 
 .time, .price, .location{
+  align-items: center;
   column-gap: 12px;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: flex-start;
+}
+
+.fbLocation{
+  flex-basis: 100%;
+}
+
+#loggedInButtonsForEvent{
+  column-gap: 5px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right:10px;
+}
+
+#loggedInButtonsForEvent > button{
+  background-color: darkgray;
+  color:white;
+  font-size:12px;
+  height: 15px;
+  padding-bottom:15px;
+  text-align: center;
+  width:60px;
 }
 
 #eventInfoText{

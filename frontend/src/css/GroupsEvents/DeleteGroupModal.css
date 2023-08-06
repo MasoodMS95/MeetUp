@@ -1,0 +1,30 @@
+.deleteGroupModal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.deleteGroupModal>h2{
+  margin-bottom: 5px;
+}
+
+.deleteGroupModal button{
+  color: white;
+  cursor: pointer;
+  height: 35px;
+  width:100%;
+  margin-bottom: 10px;
+}
+
+.deleteGroupModalButtonsContainer{
+  width: 95%;
+  row-gap: 50px;
+}
+
+#confirmDeleteGroupButton{
+  background-color: red;
+}
+
+#cancelDeleteGroupButton{
+  background-color: darkgray;
+}

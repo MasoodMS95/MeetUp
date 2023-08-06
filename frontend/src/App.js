@@ -8,6 +8,7 @@ import GroupEventFunnel from "./components/GroupsEvents/GroupEventFunnel";
 import GroupDetail from "./components/GroupsEvents/Groups/GroupDetail";
 import EventDetail from "./components/GroupsEvents/Events/EventDetail";
 import GroupForm from "./components/GroupsEvents/Groups/GroupForm";
+import EventForm from "./components/GroupsEvents/Events/EventForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
           <Route path='/groups/:id/edit'>
             <GroupForm action={'update'}/>
           </Route>
+          <Route path='/groups/:id/events/new'>
+            <EventForm />
+          </Route>
           <Route path='/groups/:groupId'>
             <GroupDetail />
           </Route>
@@ -41,6 +45,9 @@ function App() {
           </Route>
           <Route path='/events'>
             <GroupEventFunnel/>
+          </Route>
+          <Route path='*'>
+            <p style={{color: 'red', textAlign:'center',fontSize:'64px'}}>404 page not found.</p>
           </Route>
         </Switch>
       </React.Fragment>

@@ -4,6 +4,8 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import { getSingleGroup } from "../../../store/groups";
 import {getAllEvents} from '../../../store/events'
 import EventListItem from '../Events/EventListItem';
+import OpenModalButton from "../../OpenModalButton";
+import DeleteGroupModal from "./DeleteGroupModal";
 import '../../../css/GroupsEvents/GroupDetail.css'
 
 function GroupDetail(){
@@ -15,6 +17,7 @@ function GroupDetail(){
   const events = useSelector(state=>state.events.allEvents)
   const user = useSelector(state=>state.session.user)
   const history = useHistory();
+
   let imgURL= ""
   if(groupDetails.GroupImages && groupDetails.GroupImages.length > 0){
     imgURL = groupDetails.GroupImages.filter(image => image.preview===true)[0].url;
@@ -26,7 +29,6 @@ function GroupDetail(){
     const today = new Date();
     groupDetails.Events.forEach(event => {
       let fullEvent = events[event.id];
-      console.log('Full Event', fullEvent);
       let eventDate = new Date(event.startDate);
       if(eventDate >= today){
         futureEvents.push(fullEvent);
@@ -35,7 +37,7 @@ function GroupDetail(){
         pastEvents.push(fullEvent);
       }
     });
-  }
+  };
 
   const sortByStartDate = (a, b) => {
     const left = new Date(a.startDate);
@@ -46,12 +48,18 @@ function GroupDetail(){
 
   useEffect(()=>{
     const fetchAll = async () => {
-      await Promise.all([dispatch(getSingleGroup(groupId)), dispatch(getAllEvents())])
+      try{
+        await Promise.all([dispatch(getSingleGroup(groupId)), dispatch(getAllEvents())])
+      }
+      catch(err){
+        history.push('/404')
+      }
       setIsGrouploaded(true)
       setIsEventsloaded(true)
     }
     fetchAll();
-  }, [dispatch, groupId, user])
+  }, [dispatch, groupId, user]);
+
 
   return (
     <React.Fragment>
@@ -68,9 +76,14 @@ function GroupDetail(){
             {user && user.id !== groupDetails.organizerId && (<button onClick={() => window.alert('Feature coming soon')} id='joinGroupBtn'> Join this group </button>)}
             {user && user.id === groupDetails.organizerId && (
               <div id='loggedInButtonsForGroup'>
-                <button>Create event</button>
+                <button onClick={()=>{
+                  history.push(`/groups/${groupId}/events/new`)
+                }}>Create event</button>
                 <button onClick={()=>history.push(`/groups/${groupDetails.id}/edit`)}>Update</button>
-                <button>Delete</button>
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteGroupModal groupId={groupDetails.id}/>}
+                />
               </div>
             )}
           </div>
@@ -79,7 +92,7 @@ function GroupDetail(){
           <h2>Organizer</h2>
           <p id='gray'>{`${groupDetails.Organizer ? groupDetails.Organizer.firstName : 'John'} ${groupDetails.Organizer ? groupDetails.Organizer.lastName : 'Doe'}`}</p>
           <h2>What we're about</h2>
-          <p>{groupDetails.about ? groupDetails.about : 'Just like to hang out.'}</p>
+          <p id='groupDetailsAboutMeText'>{groupDetails.about ? groupDetails.about : 'Just like to hang out.'}</p>
           {
             futureEvents.length>0 && (
               <React.Fragment>

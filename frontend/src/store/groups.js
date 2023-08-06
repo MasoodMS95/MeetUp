@@ -49,21 +49,19 @@ export const createGroup = (newGroup) => async (dispatch) => {
     const error = await err.json();
     return error
   }
-
+  //TO-DO: Make sure front end handles issues
   const parsedRes = await res.json();
   const gImgRes = await csrfFetch(`/api/groups/${parsedRes.id}/images`, {
     method: 'POST',
     body: JSON.stringify({url: imgURL, preview:true})
   })
-  await dispatch(getAllGroups())
+  dispatch(getAllGroups())
   return parsedRes;
 }
 
 export const updateGroup = (updatedGroup, id) => async (dispatch) => {
   const {name, about, type, privacy, city, state} = updatedGroup;
-  console.log(typeof privacy)
-  const body = {name, about, type, private:privacy, city, state};
-  console.log(body);
+  const body = {name, about, type, private:privacy?"true":"false", city, state};
   let res;
   try{
       res = await csrfFetch(`/api/groups/${id}`, {
@@ -76,6 +74,21 @@ export const updateGroup = (updatedGroup, id) => async (dispatch) => {
     return error
   }
   return await res.json();
+}
+
+export const deleteGroup = (groupId) => async(dispatch) => {
+  let res;
+  try{
+    res = await csrfFetch(`/api/groups/${groupId}`, {
+      method: 'DELETE'
+    })
+  }
+  catch(err){
+    const error = await err.json();
+    return error;
+  }
+  await dispatch(getAllGroups())
+  return res.json();
 }
 
 //Reducer
