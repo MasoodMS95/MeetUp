@@ -2,21 +2,21 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import '../../../css/GroupsEvents/GroupEventLists.css'
 import EventListItem from './EventListItem';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllEvents } from '../../../store/events';
 
 function EventList(){
-  const events = useSelector(state => state.events.allEvents)
+  const events = useSelector(state => state.events.allEvents);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    const fetch = async () => {
+    const fetchEvents = async () => {
       await dispatch(getAllEvents());
       setIsLoaded(true);
     }
-    fetch();
-  }, [dispatch])
+    fetchEvents();
+  }, [dispatch, events])
 
   let sortedEvents = Object.values(events);
   const sortByStartDate = (a, b) => {
@@ -33,14 +33,18 @@ function EventList(){
   };
   sortedEvents.sort(sortByStartDate);
   return (
-  <div className='list'>
-    <p className='subText'>Events in Meetup</p>
-    {sortedEvents.map((event) => (
-      <div key={event.id}>
-        <EventListItem event={event}/>
-      </div>
-    ))}
-  </div>
+    <React.Fragment>
+      {isLoaded && (
+        <div className='list'>
+          <p className='subText'>Events in Meetup</p>
+          {sortedEvents.map((event) => (
+            <div key={event.id}>
+              <EventListItem event={event}/>
+            </div>
+          ))}
+        </div>
+      )}
+    </React.Fragment>
   )
 }
 

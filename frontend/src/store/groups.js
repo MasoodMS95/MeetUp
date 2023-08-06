@@ -2,7 +2,8 @@ import { csrfFetch } from "./csrf";
 
 /** Action Type Constants: */
 export const GET_ALL_GROUPS = 'groups/GET_ALL';
-export const GET_SINGLE_GROUP = 'groups/';
+export const GET_SINGLE_GROUP = 'groups/GET_SINGLE_GROUP';
+// export const DELETE_GROUP = 'groups/DELETE_GROUP'
 
 /**  Action Creators: */
 export const getAllGroupsAction = (groups) => ({
@@ -15,12 +16,17 @@ export const getSingleGroupAction = (group) => ({
   group
 })
 
+// export const deleteGroupAction = (groupId) => ({
+//   type: GET_SINGLE_GROUP,
+//   groupId
+// })
+
 /** Thunk Action Creators: */
 export const getAllGroups = () => async (dispatch) =>{
   const res = await csrfFetch('/api/groups');
   if(res.ok){
     let groups = await res.json();
-    dispatch(getAllGroupsAction(groups.Groups));
+    await dispatch(getAllGroupsAction(groups.Groups));
     return groups;
   }
   return await res.json();
@@ -87,7 +93,7 @@ export const deleteGroup = (groupId) => async(dispatch) => {
     const error = await err.json();
     return error;
   }
-  await dispatch(getAllGroups())
+  // await dispatch(deleteGroupAction(groupId))
   return res.json();
 }
 
@@ -104,6 +110,10 @@ const groupReducer = (state = {allGroups: {}, singleGroup:{}}, action) => {
       const singleGroupState = {...state};
       singleGroupState.singleGroup = action.group;
       return singleGroupState;
+    // case DELETE_GROUP:
+    //   const newState = {...state};
+    //   delete newState.groups.allGroups[action.groupId];
+    //   return newState;
     default:
       return state;
   }

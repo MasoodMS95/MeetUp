@@ -20,7 +20,7 @@ export const getAllEvents = () => async (dispatch) =>{
   const res = await csrfFetch('/api/events');
   if(res.ok){
     let events = await res.json();
-    dispatch(getAllEventsAction(events.Events));
+    await dispatch(getAllEventsAction(events.Events));
     return events;
   }
   return await res.json();

@@ -117,6 +117,7 @@
 #loggedInButtonsForEvent > button{
   background-color: darkgray;
   color:white;
+  cursor: pointer;
   font-size:12px;
   height: 15px;
   padding-bottom:15px;
