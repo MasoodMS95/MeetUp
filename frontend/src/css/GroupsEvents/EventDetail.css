@@ -107,6 +107,10 @@
   flex-basis: 100%;
 }
 
+.eventDetailsFooter>p{
+  word-wrap: break-word;
+}
+
 #loggedInButtonsForEvent{
   column-gap: 5px;
   display: flex;

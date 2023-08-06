@@ -53,6 +53,10 @@
   color: teal;
 }
 
+.eventListItemFooterContainer>p{
+  word-break: break-word;
+}
+
 img{
   width: 180px;
   height: 100px;

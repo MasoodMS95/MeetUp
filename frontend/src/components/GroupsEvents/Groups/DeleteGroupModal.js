@@ -17,8 +17,12 @@ function DeleteGroupModal({groupId}){
       <div className='deleteGroupModalButtonsContainer'>
         <button id='confirmDeleteGroupButton' onClick={async ()=>{
           try{
+            history.push('/loading');
             const res = await dispatch(deleteGroup(groupId))
-            history.push('/groups');
+            setTimeout(()=>{
+              history.push('/groups');
+              window.location.reload(false);
+            }, 1000)
             closeModal();
           }
           catch(err){

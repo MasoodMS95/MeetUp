@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 /** Action Type Constants: */
 export const GET_ALL_GROUPS = 'groups/GET_ALL';
 export const GET_SINGLE_GROUP = 'groups/GET_SINGLE_GROUP';
-// export const DELETE_GROUP = 'groups/DELETE_GROUP'
+export const DELETE_GROUP = 'groups/DELETE_GROUP'
 
 /**  Action Creators: */
 export const getAllGroupsAction = (groups) => ({
@@ -15,11 +15,6 @@ export const getSingleGroupAction = (group) => ({
   type: GET_SINGLE_GROUP,
   group
 })
-
-// export const deleteGroupAction = (groupId) => ({
-//   type: GET_SINGLE_GROUP,
-//   groupId
-// })
 
 /** Thunk Action Creators: */
 export const getAllGroups = () => async (dispatch) =>{
@@ -93,7 +88,7 @@ export const deleteGroup = (groupId) => async(dispatch) => {
     const error = await err.json();
     return error;
   }
-  // await dispatch(deleteGroupAction(groupId))
+  await dispatch(getAllGroups())
   return res.json();
 }
 
@@ -110,10 +105,6 @@ const groupReducer = (state = {allGroups: {}, singleGroup:{}}, action) => {
       const singleGroupState = {...state};
       singleGroupState.singleGroup = action.group;
       return singleGroupState;
-    // case DELETE_GROUP:
-    //   const newState = {...state};
-    //   delete newState.groups.allGroups[action.groupId];
-    //   return newState;
     default:
       return state;
   }

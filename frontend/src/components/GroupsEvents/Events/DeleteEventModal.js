@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../../context/Modal';
 import { deleteEvent } from '../../../store/events';
+import '../../../css/GroupsEvents/DeleteEventModal.css'
 
 function DeleteEventModal({eventId}){
   const { closeModal } = useModal();
@@ -16,9 +17,13 @@ function DeleteEventModal({eventId}){
       <div className='deleteEventModalButtonsContainer'>
         <button id='confirmDeleteEventButton' onClick={async ()=>{
           try{
+            history.push('/loading');
             const res = await dispatch(deleteEvent(eventId))
+            setTimeout(()=>{
+              history.push('/events');
+              window.location.reload(false);
+            }, 1000)
             closeModal();
-            history.push('/events')
           }
           catch(err){
             history.push('/404')

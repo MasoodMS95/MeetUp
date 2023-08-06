@@ -46,6 +46,9 @@ function App() {
           <Route path='/events'>
             <GroupEventFunnel/>
           </Route>
+          <Route path='/loading'>
+            <p style={{fontSize:"32px", textAlign:"center"}}>Loading... Please wait...</p>
+          </Route>
           <Route path='*'>
             <p style={{color: 'red', textAlign:'center',fontSize:'64px'}}>404 page not found.</p>
           </Route>
