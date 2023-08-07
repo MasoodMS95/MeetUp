@@ -16,7 +16,7 @@ function EventDetail(){
   const history = useHistory();
   const eventDetails = useSelector(state=>state.events.singleEvent);
   const user = useSelector(state=>state.session.user)
-  console.log(eventDetails);
+
   let imgURL = "";
   if(eventDetails.EventImages?.length>0){
     imgURL = eventDetails.EventImages.filter(event => event.preview===true)[0].url;

@@ -22,14 +22,6 @@ const EventForm = () => {
   const [errors, setErrors] = useState({});
 
 
-  useEffect(()=>{console.log('NAME',name)}, [name]);
-  useEffect(()=>{console.log('TYPE',type)}, [type]);
-  useEffect(()=>{console.log('PRICE',price)}, [price]);
-  useEffect(()=>{console.log('START_DATE',startDate)}, [startDate]);
-  useEffect(()=>{console.log('END_DATE',endDate)}, [endDate]);
-  useEffect(()=>{console.log('IMG_URL',imgURL)}, [imgURL]);
-  useEffect(()=>{console.log('DESCRIPTION',description)}, [description]);
-
   useEffect(()=>{
     if(!user){
       window.alert('Unauthorized Access.')
@@ -102,7 +94,7 @@ const EventForm = () => {
       }
       else{window.alert('Check errors')}
     }
-    console.log('Errors', errors);
+
 
   }
   return (
