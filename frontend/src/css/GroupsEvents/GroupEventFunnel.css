@@ -4,11 +4,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 35%;
+  margin:auto;
+  width: 25%;
 }
 @media screen and (max-width:1370px) {
   .allList{
-    margin-left: 20%;
+    width: 60%;
   }
 }
 

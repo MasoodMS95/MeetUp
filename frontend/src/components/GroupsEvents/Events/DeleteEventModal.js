@@ -5,7 +5,7 @@ import { useModal } from '../../../context/Modal';
 import { deleteEvent } from '../../../store/events';
 import '../../../css/GroupsEvents/DeleteEventModal.css'
 
-function DeleteEventModal({eventId}){
+function DeleteEventModal({eventId, groupId}){
   const { closeModal } = useModal();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function DeleteEventModal({eventId}){
             history.push('/loading');
             const res = await dispatch(deleteEvent(eventId))
             setTimeout(()=>{
-              history.push('/events');
+              history.push(`/groups/${groupId}`);
               window.location.reload(false);
             }, 1000)
             closeModal();

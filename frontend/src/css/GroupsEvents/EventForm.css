@@ -1,49 +1,37 @@
-.groupFormContainer{
+.eventFormContainer{
   margin: auto;
   width: 50%;
 }
 
-.groupFormContainer h3{
-  color:teal;
-}
 
-.gFormError{
+.eFormError{
   margin-top:1px;
   margin-bottom: 1px;
 }
 
-.noMargin{
-  margin-top:0px;
-  margin-bottom:0px;
-}
-
-.groupFormSection{
+.formSection{
   border-bottom:solid black 1px;
   padding-bottom: 8px;
 }
 
-.groupFormSection>h2{
+.eventFormContainer>h2{
   margin-bottom:2px;
 }
 
-.subtext{
-  margin-top:2px;
-}
-
-.noBottomMargin{
+.eventFormQuestion{
   margin-bottom: 0px;
 }
 
-.groupFormContainer textarea{
+.eventFormContainer textarea{
     width: 295px;
     height: 160px;
 }
 
-.groupFormContainer button{
+.eventFormContainer button{
   background-color: red;
+  cursor: pointer;
   border: solid black 1px;
   box-shadow: 2px 2px 4px black;
-  cursor: pointer;
   color: white;
   margin-top: 10px;
 }

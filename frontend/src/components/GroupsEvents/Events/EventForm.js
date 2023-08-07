@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router-dom";
 import { getSingleGroup } from "../../../store/groups";
 import { createEvent } from "../../../store/events";
+import '../../../css/GroupsEvents/EventForm.css'
 
 const EventForm = () => {
   const {id} = useParams();
@@ -54,15 +55,7 @@ const EventForm = () => {
     fetch();
   }, [dispatch])
 
-  /*
-    NAME done
-    TYPE done
-    PRICE done
-    START DATE
-    END DATE
-    IMG URL
-    DESCRIPTION
-  */
+
   const errorValidator = () => {
     const endings = ['jpg', 'jpeg', 'png'];
     const errs = {};
@@ -82,7 +75,8 @@ const EventForm = () => {
       errs.endDate=true;
     }
     let today = new Date();
-    if(startDate < today){
+    let startInput = new Date(startDate);
+    if(startInput < today){
       errs.startDate = true;
     }
     if(startDate > endDate){
@@ -114,7 +108,7 @@ const EventForm = () => {
   return (
     <React.Fragment>
       {isLoaded && (
-        <form className='eventForm'
+        <form className='eventFormContainer'
           onSubmit={(e) => submitHandler(e)}
         >
           <h2>{`Create an event for ${group?.name}`}</h2>
@@ -126,7 +120,7 @@ const EventForm = () => {
               onChange={(e)=>setName(e.target.value)}
               placeholder="Event Name"
             ></input>
-            {errors.name && <p className="errors">Name is required</p>}
+            {errors.name && <p className="errors eFormError">Name is required</p>}
           </div>
 
 
@@ -141,7 +135,7 @@ const EventForm = () => {
               <option value='In person'>In person</option>
               <option value='Online'>Online</option>
             </select>
-            {errors.type && <p className="errors">Type is required</p>}
+            {errors.type && <p className="errors eFormError">Type is required</p>}
             <p className='eventFormQuestion'>What is the price for your event?</p>
             <input
               type='number'
@@ -150,7 +144,7 @@ const EventForm = () => {
               placeholder = '$0'
               onChange={(e)=>{setPrice(e.target.value)}}
             ></input>
-            {errors.price && <p className="errors">Price is required and must be greater than zero</p>}
+            {errors.price && <p className="errors eFormError">Price is required and must be greater than zero</p>}
           </div>
 
           <div className='formSection'>
@@ -161,7 +155,7 @@ const EventForm = () => {
               placeholder="MM/DD/YYYY HH:mm PM"
               onChange={(e)=>setStartDate(e.target.value)}
             ></input>
-            {errors.startDate && <p className="errors">Event start is required and must be in the future.</p>}
+            {errors.startDate && <p className="errors eFormError">Event start is required and must be in the future.</p>}
 
             <p className='eventFormQuestion'>When does your event end?</p>
             <input
@@ -170,16 +164,17 @@ const EventForm = () => {
               placeholder="MM/DD/YYYY HH:mm PM"
               onChange={(e)=>setEndDate(e.target.value)}
             ></input>
-            {errors.endDate && <p className="errors">Event end is required and must be after start date.</p>}
+            {errors.endDate && <p className="errors eFormError">Event end is required and must be after start date.</p>}
           </div>
 
           <div className="formSection">
           <p className='eventFormQuestion'>Please add an image url for your event below.</p>
           <input
             value={imgURL}
+            placeholder="Image URL"
             onChange={(e)=>setImgURL(e.target.value)}
           ></input>
-          {errors.imgURL && <p className="errors">Image URL must end in .png, .jpg, or .jpeg</p>}
+          {errors.imgURL && <p className="errors eFormError">Image URL must end in .png, .jpg, or .jpeg</p>}
           </div>
 
           <div className='formSection'>
@@ -189,7 +184,7 @@ const EventForm = () => {
               placeholder="Please include at least 30 characters"
               onChange={(e)=>setDescription(e.target.value)}
             ></textarea>
-            {errors.description && <p className="errors">Description must be at least 30 characters long.</p>}
+            {errors.description && <p className="errors eFormError">Description must be at least 30 characters long.</p>}
           </div>
 
           <button>Create Event</button>
