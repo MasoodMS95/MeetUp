@@ -141,7 +141,7 @@ const EventForm = () => {
               placeholder = '$0'
               onChange={(e)=>{setPrice(e.target.value)}}
             ></input>
-            {errors.price && <p className="errors eFormError">Price is required and must be greater than zero</p>}
+            {errors.price && <p className="errors eFormError">Price is required and must be greater than or equal to zero</p>}
           </div>
 
           <div className='formSection'>
