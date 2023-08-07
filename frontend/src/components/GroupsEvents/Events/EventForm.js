@@ -51,7 +51,7 @@ const EventForm = () => {
   const errorValidator = () => {
     const endings = ['jpg', 'jpeg', 'png'];
     const errs = {};
-    if(!name){
+    if(!name || name.length < 5){
       errs.name = true;
     }
     if(!type){
@@ -112,7 +112,7 @@ const EventForm = () => {
               onChange={(e)=>setName(e.target.value)}
               placeholder="Event Name"
             ></input>
-            {errors.name && <p className="errors eFormError">Name is required</p>}
+            {errors.name && <p className="errors eFormError">Name is required and must be at least 5 characters</p>}
           </div>
 
 
