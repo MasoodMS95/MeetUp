@@ -36,6 +36,7 @@
 
 .navLoggedOut>button:hover{
   border: solid black 1px;
+  cursor: pointer;
 }
 
 .navButtons>a:hover, .homeButton>a:hover{
@@ -57,7 +58,7 @@
   margin-top:5px;
   padding: 5px 10px;
   position: absolute;
-  top: 64px;
+  top: 56px;
 }
 
 .modalLine{
@@ -69,6 +70,7 @@
 }
 
 .profile-dropdown button{
+  cursor: pointer;
   width: 90px;
 }
 
@@ -80,10 +82,15 @@
 }
 
 .navLoggedIn{
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: space-evenly;
+  margin-top:3px;
+}
+
+.navLoggedIn>button{
+  cursor: pointer;
 }
 
 .navButtons a{
