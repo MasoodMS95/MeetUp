@@ -89,24 +89,24 @@ const validateEvent = [
   check('description')
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
-  check('startDate')
-    .custom(async (startDate, { req }) => {
-      let currDate = new Date();
-      let enteredDate = new Date(startDate);
-      if(enteredDate < currDate){
-        throw new Error("Start date must be in the future");
-      }
-      return true;
-    }),
-  check('endDate')
-    .custom(async (endDate, { req }) => {
-      let startDate = new Date(req.body.startDate);
-      let end = new Date(endDate);
-      if(startDate >= end){
-        throw new Error("End date is less than start date");
-      }
-      return true;
-    }),
+  // check('startDate')
+  //   .custom(async (startDate, { req }) => {
+  //     let currDate = new Date();
+  //     let enteredDate = new Date(startDate);
+  //     if(enteredDate < currDate){
+  //       throw new Error("Start date must be in the future");
+  //     }
+  //     return true;
+  //   }),
+  // check('endDate')
+  //   .custom(async (endDate, { req }) => {
+  //     let startDate = new Date(req.body.startDate);
+  //     let end = new Date(endDate);
+  //     if(startDate >= end){
+  //       throw new Error("End date is less than start date");
+  //     }
+  //     return true;
+  //   }),
   handleValidationErrors];
 
   validateMembershipChange = [
