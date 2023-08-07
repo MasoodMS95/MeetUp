@@ -139,6 +139,11 @@ const EventForm = () => {
             <p className='eventFormQuestion'>What is the price for your event?</p>
             <input
               type='number'
+              onKeyDown={(e)=>{
+                if(["+", "-", "e", "E"].includes(e.key)){
+                  e.preventDefault();
+                }
+              }}
               value={price}
               id='priceInput'
               placeholder = '$0'
