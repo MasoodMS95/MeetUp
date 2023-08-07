@@ -19,12 +19,13 @@ function EventListItem({event}){
     parsedDate = event.startDate.split(" ");
   }
 
+
   return(
     <div onClick={(e)=>handeClick(e)} className='eventListItemContainer'>
       <div className='eventListItemHeaderContainer'>
         <img src={event.previewImage} alt='No Preview Image Available'></img>
         <div className='EventInfo'>
-          <h3>{`${parsedDate[0]} ·  <${parsedDate[1].slice(0,5)}>`}</h3>
+          {parsedDate.length > 1 && (<h3>{`${parsedDate[0]} ·  <${parsedDate[1]?.slice(0,5)}>`}</h3>)}
           <p className='eventName'>{event.name}</p>
           <p className='eventLocation gray'>{`Location: ${city}, ${state}`}</p>
         </div>
