@@ -16,7 +16,7 @@ function EventListItem({event}){
   }
   let parsedDate = [];
   if(event.startDate){
-    parsedDate = event.startDate.split(" ");
+    parsedDate = event.startDate.split("T");
   }
 
 
@@ -25,7 +25,7 @@ function EventListItem({event}){
       <div className='eventListItemHeaderContainer'>
         <img src={event.previewImage} alt='No Preview Image Available'></img>
         <div className='EventInfo'>
-          {parsedDate.length > 1 && (<h3>{`${parsedDate[0]} ·  <${parsedDate[1]?.slice(0,5)}>`}</h3>)}
+          <h3>{`${parsedDate[0]} ·  <${parsedDate[1]?.slice(0,5)}>`}</h3>
           <p className='eventName'>{event.name}</p>
           <p className='eventLocation gray'>{`Location: ${city}, ${state}`}</p>
         </div>

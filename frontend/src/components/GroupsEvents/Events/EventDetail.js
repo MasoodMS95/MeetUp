@@ -43,11 +43,11 @@ function EventDetail(){
 
   let parsedStartDate = [];
   if(eventDetails.startDate){
-    parsedStartDate = eventDetails.startDate.split(" ");
+    parsedStartDate = eventDetails.startDate.split("T");
   }
   let parsedEndDate = [];
   if(eventDetails.endDate){
-    parsedEndDate = eventDetails.endDate.split(" ");
+    parsedEndDate = eventDetails.endDate.split("T");
   }
 
   let firstName = "";

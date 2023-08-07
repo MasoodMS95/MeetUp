@@ -44,11 +44,11 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       }
     }, options);
   },
