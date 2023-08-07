@@ -48,11 +48,11 @@ function LoginFormModal() {
       </div>
       {errors.credential && <p className="errors">{errors.credential}</p>}
       <button disabled={!password || !credential || password.length < 6 || credential.length < 4} type="submit">Log In</button>
-      <button onClick={async (e) => {
+      <p id='demoButton' onClick={async (e) => {
         e.preventDefault();
         dispatch(sessionActions.login({ credential: 'testy@tester.io', password: 'password' }))
         closeModal();
-      }}>Demo User</button>
+      }}>Demo User</p>
     </form>
   </div>
   );

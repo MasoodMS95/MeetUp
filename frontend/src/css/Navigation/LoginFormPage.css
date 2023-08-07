@@ -50,3 +50,11 @@
   cursor: pointer;
   box-shadow: 2px 2px 4px darkgray;
 }
+
+#demoButton{
+  color: red;
+  cursor: pointer;
+  margin: 8px 0px;
+  text-align: center;
+  text-decoration: underline;
+}
