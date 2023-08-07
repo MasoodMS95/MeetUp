@@ -4,6 +4,7 @@ import { createGroup } from "../../../store/groups";
 import { useHistory, useParams } from "react-router-dom";
 import { getSingleGroup } from "../../../store/groups";
 import { updateGroup } from "../../../store/groups";
+import '../../../css/GroupsEvents/GroupForm.css'
 
 function GroupForm({action}){
   const [name, setName] = useState('');
@@ -127,7 +128,7 @@ function GroupForm({action}){
             placeholder="State"
             onChange={(e) => setState(e.target.value)}
             ></input>
-          {errors.location && (<p className='errors'>Location is required</p>)}
+          {errors.location && (<p className='errors gFormError'>Location is required</p>)}
         </div>
 
         <div className='groupFormSection'>
@@ -138,7 +139,7 @@ function GroupForm({action}){
             placeholder="What is your group name?"
             onChange={(e) => setName(e.target.value)}
             ></input>
-            {errors.name && (<p className='errors'>Name is required</p>)}
+            {errors.name && (<p className='errors gFormError'>Name is required</p>)}
         </div>
 
         <div className='groupFormSection'>
@@ -155,12 +156,12 @@ function GroupForm({action}){
             placeholder="Please write at least 50 characters"
             onChange={(e)=>setAbout(e.target.value)}
           ></textarea>
-          {errors.about && (<p className='errors'>Description must be at least 50 characters long</p>)}
+          {errors.about && (<p className='errors gFormError'>Description must be at least 50 characters long</p>)}
         </div>
 
         <div className='groupFormSection'>
           <h2>Final steps...</h2>
-          <p>Is this an in person or online group?</p>
+          <p className="noBottomMargin">Is this an in person or online group?</p>
           <select
             onChange={(e)=>setType(e.target.value)}
             value={type}
@@ -169,8 +170,8 @@ function GroupForm({action}){
             <option>In person</option>
             <option>Online</option>
           </select>
-          {errors.type && (<p className="errors">Group Type is required</p>)}
-          <p>Is this group private or public?</p>
+          {errors.type && (<p className="errors gFormError">Group Type is required</p>)}
+          <p className="noBottomMargin">Is this group private or public?</p>
           <select
             value={privacy}
             onChange={(e)=>setPrivacy(e.target.value)}
@@ -179,18 +180,19 @@ function GroupForm({action}){
             <option value={true}>Private</option>
             <option value={false}>Public</option>
           </select>
-          {errors.privacy && (<p className="errors">Visibility Type Required</p>)}
+          {errors.privacy && (<p className="errors gFormError">Visibility Type Required</p>)}
+          {!isUpdate && (
+          <React.Fragment>
+            <p className="noBottomMargin">Please add an image url for your group below:</p>
+            <input
+              value={imgURL}
+              onChange={e=>setImgURL(e.target.value)}
+              placeholder="Image Url"
+            ></input>
+            {errors.imgURL && (<p className="errors gFormError">Image URL must end in .png, .jpg, or .jpeg</p>)}
+          </React.Fragment>
+          )}
         </div>
-        {!isUpdate && (
-        <div className='groupFormSection'>
-          <p className='subtext'>Please add in image url for your group below:</p>
-          <input
-            value={imgURL}
-            onChange={e=>setImgURL(e.target.value)}
-          ></input>
-          {errors.imgURL && (<p className="errors">Image URL must end in .png, .jpg, or .jpeg</p>)}
-        </div>
-        )}
 
         <button>{isUpdate ? 'Update Group':'Create Group'}</button>
       </form>

@@ -1,11 +1,12 @@
 .NavBar{
-  border-bottom:solid black 1px;
+  align-items: center;
+  border-bottom: solid black 1px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  margin: auto;
   padding-top: 5px;
   padding-right: 20px;
+  width: 90%;
 }
 
 #title{

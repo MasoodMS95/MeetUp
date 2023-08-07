@@ -1,0 +1,40 @@
+.groupFormContainer{
+  margin: auto;
+  width: 50%;
+}
+
+.groupFormContainer h3{
+  color:teal;
+}
+
+.gFormError{
+  margin-top:1px;
+  margin-bottom: 1px;
+}
+
+.noMargin{
+  margin-top:0px;
+  margin-bottom:0px;
+}
+
+.groupFormSection{
+  border-bottom:solid black 1px;
+  padding-bottom: 8px;
+}
+
+.groupFormSection>h2{
+  margin-bottom:2px;
+}
+
+.subtext{
+  margin-top:2px;
+}
+
+.noBottomMargin{
+  margin-bottom: 0px;
+}
+
+.groupFormContainer textarea{
+    width: 295px;
+    height: 160px;
+}
