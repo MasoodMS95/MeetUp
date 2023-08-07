@@ -51,6 +51,13 @@
   box-shadow: 2px 2px 4px darkgray;
 }
 
+.loginPage button:disabled{
+  border:none;
+  cursor: default;
+  box-shadow: none;
+  margin-bottom: 15px;
+}
+
 #demoButton{
   color: red;
   cursor: pointer;
