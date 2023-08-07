@@ -16,18 +16,21 @@ function GroupEventFunnel(){
   const groups = useSelector(state => state.groups.allGroups);
   const events = useSelector(state => state.events.allEvents);
   const dispatch = useDispatch();
-  
+
 
   useEffect(()=>{
     const fetchAll = async () =>{
       setIsEventLoaded(false);
       setIsGroupLoaded(false);
       await Promise.all([dispatch(getAllGroups()), dispatch(getAllEvents())])
-      setIsGroupLoaded(true);
-      setIsEventLoaded(true);
+      .then(()=>{
+        setIsGroupLoaded(true);
+        setIsEventLoaded(true);
+      })
     }
     fetchAll();
   }, [dispatch])
+  
 
   useEffect(()=>{
     setCurrGroupFlag(location.pathname.includes('groups'));

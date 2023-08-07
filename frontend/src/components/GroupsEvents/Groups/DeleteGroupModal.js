@@ -18,12 +18,11 @@ function DeleteGroupModal({groupId}){
         <button id='confirmDeleteGroupButton' onClick={async ()=>{
           try{
             history.push('/loading');
-            const res = await dispatch(deleteGroup(groupId))
-            setTimeout(()=>{
+            await dispatch(deleteGroup(groupId))
+            .then(()=>{
               history.push('/groups');
-              window.location.reload(false);
-            }, 1000)
-            closeModal();
+              closeModal();
+            })
           }
           catch(err){
             history.push('/404')

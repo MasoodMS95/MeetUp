@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../../context/Modal';
-import { deleteEvent } from '../../../store/events';
+import { deleteEvent, getAllEvents } from '../../../store/events';
 import '../../../css/GroupsEvents/DeleteEventModal.css'
 
 function DeleteEventModal({eventId, groupId}){
@@ -18,12 +18,11 @@ function DeleteEventModal({eventId, groupId}){
         <button id='confirmDeleteEventButton' onClick={async ()=>{
           try{
             history.push('/loading');
-            const res = await dispatch(deleteEvent(eventId))
-            setTimeout(()=>{
+            await dispatch(deleteEvent(eventId))
+            .then(() => {
               history.push(`/groups/${groupId}`);
-              window.location.reload(false);
-            }, 1000)
-            closeModal();
+              closeModal();
+            })
           }
           catch(err){
             history.push('/404')

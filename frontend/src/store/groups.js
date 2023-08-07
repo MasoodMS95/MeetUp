@@ -1,7 +1,9 @@
 import { csrfFetch } from "./csrf";
+const clone = require('clone-deep');
+
 
 /** Action Type Constants: */
-export const GET_ALL_GROUPS = 'groups/GET_ALL';
+export const GET_ALL_GROUPS = 'groups/GET_ALL_GROUPS';
 export const GET_SINGLE_GROUP = 'groups/GET_SINGLE_GROUP';
 export const DELETE_GROUP = 'groups/DELETE_GROUP'
 
@@ -14,6 +16,11 @@ export const getAllGroupsAction = (groups) => ({
 export const getSingleGroupAction = (group) => ({
   type: GET_SINGLE_GROUP,
   group
+})
+
+export const deleteGroupAction = (groupId) => ({
+  type: DELETE_GROUP,
+  groupId
 })
 
 /** Thunk Action Creators: */
@@ -31,7 +38,7 @@ export const getSingleGroup = (groupId) => async (dispatch) =>{
   const res = await csrfFetch(`/api/groups/${groupId}`);
   if(res.ok){
     let group = await res.json();
-    dispatch(getSingleGroupAction(group));
+    await dispatch(getSingleGroupAction(group));
     return group;
   }
 }
@@ -56,7 +63,7 @@ export const createGroup = (newGroup) => async (dispatch) => {
     method: 'POST',
     body: JSON.stringify({url: imgURL, preview:true})
   })
-  dispatch(getAllGroups())
+  await dispatch(getAllGroups())
   return parsedRes;
 }
 
@@ -88,7 +95,8 @@ export const deleteGroup = (groupId) => async(dispatch) => {
     const error = await err.json();
     return error;
   }
-  await dispatch(getAllGroups())
+  console.log(res);
+  await dispatch(deleteGroupAction(groupId))
   return res.json();
 }
 
@@ -96,15 +104,19 @@ export const deleteGroup = (groupId) => async(dispatch) => {
 const groupReducer = (state = {allGroups: {}, singleGroup:{}}, action) => {
   switch (action.type) {
     case GET_ALL_GROUPS:
-      const allGroupsState = {...state};
+      const newAllGroupState = clone(state);
       action.groups.forEach(group => {
-        allGroupsState.allGroups[group.id] = group;
+        newAllGroupState.allGroups[group.id] = group;
       });
-      return allGroupsState
+      return newAllGroupState;
     case GET_SINGLE_GROUP:
-      const singleGroupState = {...state};
-      singleGroupState.singleGroup = action.group;
-      return singleGroupState;
+      const newSingleGroupState = clone(state);
+      newSingleGroupState.singleGroup = action.group;
+      return newSingleGroupState;
+    case DELETE_GROUP:
+      const newDeleteGroupState = clone(state);
+      delete newDeleteGroupState.allGroups[action.groupId]
+      return newDeleteGroupState;
     default:
       return state;
   }

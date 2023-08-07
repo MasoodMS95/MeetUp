@@ -1,9 +1,15 @@
+import { useDispatch } from 'react-redux';
 import '../../../css/GroupsEvents/GroupListItem.css'
 import { useHistory } from 'react-router-dom';
+import { getSingleGroup } from '../../../store/groups';
 function GroupListItem({group}){
   const history = useHistory();
-  const handeClick = (e) => {
+  const dispatch = useDispatch();
+
+  const handeClick = async (e) => {
     e.preventDefault();
+    // await dispatch(getSingleGroup(group.id))
+    // .then(history.push(`/groups/${group.id}`))
     history.push(`/groups/${group.id}`)
   }
   return(

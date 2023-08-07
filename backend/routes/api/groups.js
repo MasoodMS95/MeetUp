@@ -80,7 +80,7 @@ const validateEvent = [
   check('price')
     .isDecimal()
     .custom(async (price, { req }) => {
-      if(price > 0){
+      if(price >= 0){
         return true;
       }
       throw new Error("Price is invalid");

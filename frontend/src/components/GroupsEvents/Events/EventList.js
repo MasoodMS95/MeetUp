@@ -16,7 +16,7 @@ function EventList(){
       setIsLoaded(true);
     }
     fetchEvents();
-  }, [dispatch, events])
+  }, [dispatch])
 
   let sortedEvents = Object.values(events);
   const sortByStartDate = (a, b) => {

@@ -12,10 +12,10 @@ function GroupList(){
   useEffect(()=>{
     const fetchGroup = async () => {
       await dispatch(getAllGroups())
-      .then(setIsLoaded(true))
+      setIsLoaded(true)
     }
     fetchGroup();
-  }, [dispatch, groups])
+  }, [dispatch])
 
   return (
     <React.Fragment>
