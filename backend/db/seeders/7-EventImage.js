@@ -22,12 +22,12 @@ module.exports = {
     await EventImage.bulkCreate([
       {
         eventId: 1,
-        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
+        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
         preview: true
       },
       {
         eventId: 2,
-        url: 'https://www.lilliputplayhomes.com/wp-content/uploads/2022/06/Crazy-Clubhouse-Final-Fracka.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1137540999300796577/1138074029996126388/pexels-photo-1715495.png',
         preview: true
       },
       {

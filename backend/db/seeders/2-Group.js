@@ -20,30 +20,30 @@ module.exports = {
     await Group.bulkCreate([
       {
         organizerId: 1,
-        name: 'Cool Boys Clubbbbbb',
-        about: 'We be doing some coo ah ish bruh fr ong no cap',
+        name: 'Cool Boys Club',
+        about: 'We party.',
         type: 'Online',
         private: false,
-        city: 'The block',
-        state: 'COOLBOYUSA'
+        city: 'Bay Area',
+        state: 'CA'
       },
       {
         organizerId: 2,
-        name: 'Lame Boys Clubbbbbb',
-        about: 'We be doing some lame ah ish bruh fr ong no cap',
+        name: 'Poets Club',
+        about: 'Club for poetry.',
         type: 'Online',
         private: false,
-        city: 'The block',
-        state: 'LAMEBOYUSA'
+        city: 'Atlanta',
+        state: 'Georgia'
       },
       {
         organizerId: 3,
-        name: 'Shenanigans Boys Clubbbbbb',
-        about: 'We be doing some Shenanigans ah ish bruh fr ong no cap',
+        name: 'Golf Club',
+        about: 'We like to golf.',
         type: 'In person',
         private: true,
-        city: 'The block',
-        state: 'SHENANIGANUSA'
+        city: 'Baryville',
+        state: 'Maryland'
       },
     ], { validate: true });
   },

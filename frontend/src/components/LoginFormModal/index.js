@@ -50,7 +50,7 @@ function LoginFormModal() {
       <button disabled={!password || !credential || password.length < 6 || credential.length < 4} type="submit">Log In</button>
       <button onClick={async (e) => {
         e.preventDefault();
-        dispatch(sessionActions.login({ credential: 'user1@user.io', password: 'password' }))
+        dispatch(sessionActions.login({ credential: 'testy@tester.io', password: 'password' }))
         closeModal();
       }}>Demo User</button>
     </form>

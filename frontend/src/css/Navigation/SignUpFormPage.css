@@ -59,3 +59,9 @@
   cursor: pointer;
   box-shadow: 2px 2px 4px darkgray;
 }
+
+.signupPage button:disabled{
+  border:none;
+  cursor: default;
+  box-shadow: none;
+}

@@ -19,25 +19,25 @@ module.exports = {
     await Venue.bulkCreate([
       {
         groupId: 1,
-        address: 'THE SPOT',
-        city: 'THE BLOCK',
-        state: 'COOLBOYUSA',
+        address: 'CoolBoyHQ',
+        city: 'N/A',
+        state: 'N/A',
         lat: 10,
         lng: 10
       },
       {
         groupId: 2,
-        address: 'THE SPOT2',
-        city: 'THE BLOCK2',
-        state: 'COOLBOYUSA2',
+        address: '342 West Palm Street',
+        city: 'Atlanta',
+        state: 'Georgia',
         lat: 20,
         lng: 20
       },
       {
         groupId: 3,
-        address: 'THE SPOT3',
-        city: 'THE BLOCK3',
-        state: 'COOLBOYUSA3',
+        address: '2495 Yard Street',
+        city: 'THE Baryville',
+        state: 'Maryland',
         lat: 30,
         lng: 30
       },

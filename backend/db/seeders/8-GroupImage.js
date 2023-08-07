@@ -19,17 +19,17 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1137540999300796577/1137541011401355394/https3A2F2Fhypebeast.png',
         preview: true
       },
       {
         groupId: 2,
-        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1137540999300796577/1138073301848182944/thepoetryclublogographitesmaller.png',
         preview: true
       },
       {
         groupId: 3,
-        url: 'https://wallpapercave.com/wp/kfgc4WQ.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1137540999300796577/1138073647806947400/6398d3f5f0c5330018dc1dff.png',
         preview: true
       },
     ], { validate: true });

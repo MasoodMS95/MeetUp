@@ -21,29 +21,29 @@ module.exports = {
       {
         venueId: 1,
         groupId: 1,
-        name: "Cool Boys Doing Cool Things",
-        description: "We're cool boys who like to do cool things. We do all sorts of things like such as that and this and then we do that as well.",
+        name: "After Hours Rave",
+        description: "A late night rave going until we're asked to leave.",
         type: "Online",
-        capacity: 1,
-        price: 1,
-        startDate: "2025-01-01",
-        endDate: "2022-01-02"
+        capacity: 120,
+        price: 6,
+        startDate: "2025-01-01T21:00:00",
+        endDate: "2022-01-02T05:00:00"
       },
       {
         venueId: 2,
         groupId: 2,
-        name: "Lame Boys Doing Lame Things",
-        description: "We're lame boys who like to do lame things. We do all sorts of things like such as that and this and then we do that as well.",
-        type: "Online",
-        capacity: 2,
-        price: 2,
-        startDate: "2022-02-01",
-        endDate: "2022-02-02"
+        name: "Poetry Slam",
+        description: "Snapping the night away with friends.",
+        type: "In person",
+        capacity: 40,
+        price: 14,
+        startDate: "2022-02-01T18:00:00",
+        endDate: "2022-02-02T23:00:00"
       },
       {
         venueId: 3,
         groupId: 3,
-        name: "Shenanigans and Mistakes",
+        name: "Golf Tournament",
         description: "We're getting into all sorts of shenanigans out here. We do all sorts of things like such as that and this and then we do that as well.",
         type: "In person",
         capacity: 3,
@@ -54,13 +54,13 @@ module.exports = {
       {
         venueId: 1,
         groupId: 1,
-        name: "Shenanigans and Mistakes THE PAST",
+        name: "Pier Party",
         description: "We're getting into all sorts of shenanigans out here. We do all sorts of things like such as that and this and then we do that as well.",
         type: "In person",
-        capacity: 3,
+        capacity: 32,
         price: 3,
-        startDate: "2024-03-03",
-        endDate: "2025-03-03"
+        startDate: "2024-03-03T18:00:00",
+        endDate: "2025-03-03T05:00:00"
       },
       {
         venueId: 1,
@@ -70,8 +70,8 @@ module.exports = {
         type: "In person",
         capacity: 3,
         price: 3,
-        startDate: "2020-03-03",
-        endDate: "2025-03-03"
+        startDate: "2020-03-03T18:00:00",
+        endDate: "2025-03-03T05:00:00"
       },
     ], { validate: true });
   },
